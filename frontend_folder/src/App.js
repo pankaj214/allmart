@@ -17,7 +17,9 @@ import Admindashboard from "./admindashboard";
 import Adminlogin from "./credentials/adminlogin";
 import Adminlogout from "./credentials/adminlogout";
 import {initialState,reducer} from './reducer/UseReducer'
-
+import Viewhistory from "./viewhistory";
+import Changepassword from "./changepassword";
+import Checkout from "./checkout";
 
 export const UserContext=createContext()
 
@@ -53,7 +55,10 @@ const Routing =()=>{
         <Route exact path="/logout_" component={Logoutall} />
         <Route exact path="/adminlogin" component={Adminlogin} />
           <Route exact path="/admindashboard" component={Admindashboard} />
+          <Route exact path="/viewhistory" component={Viewhistory} />
           <Route exact path="/adminlogout" component={Adminlogout} />
+          <Route exact path="/change_password" component={Changepassword} /> 
+          <Route exact path="/checkout" component={Checkout} />
         <Route component={Error} />
       </Switch>
     </BrowserRouter>

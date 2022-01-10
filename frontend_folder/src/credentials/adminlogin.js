@@ -72,6 +72,7 @@ const Adminlogin = () => {
       });
         localStorage.setItem('decisions',1)
       setTimeout(() => {
+        alert('Welcome back')
         history.push("/admindashboard",{replace:true});
       }, 1000);
     } else {

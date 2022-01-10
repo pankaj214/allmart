@@ -9,12 +9,13 @@ import Appbar from "./appbar";
 import SearchIcon from '@material-ui/icons/Search';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from './footer';
 const Home = () => {
  
   const history = useHistory()
 
   const handleBlog=async()=>{
-    const res=await fetch('http://localhost:5000/api/addtocart',{
+    const res=await fetch('http://localhost:5000/api/checkLogin',{
       method:'GET',
       headers:{
   Accept:'application/json',
@@ -35,7 +36,7 @@ const Home = () => {
    }
   }
   const handleBlog1=async()=>{
-    const res=await fetch('http://localhost:5000/api/viewmore',{
+    const res=await fetch('http://localhost:5000/api/checkLogin',{
       method:'GET',
       headers:{
   Accept:'application/json',
@@ -90,11 +91,9 @@ return(
 </Card>
 </div>
 </Grid>
-
-
-
 </Grid>
 <br/>      
+<Footer/>
 <ToastContainer/>
 </>
 );

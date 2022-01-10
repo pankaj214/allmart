@@ -89,32 +89,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get('/about',authenticate,(req,res)=>{
+router.get('/checkLogin',authenticate,(req,res)=>{
 
   return res.send(req.root)
 
-})
-
-router.get('/dashboard',authenticate,(req,res)=>{
- 
-  return res.send(req.root)
-
-
-})
-
-router.get('/contact',authenticate,(req,res)=>{
- 
-  return res.send(req.root)
-
-})
-
-router.get('/viewmore',authenticate,(req,res)=>{
-  return res.send(req.root)
-})
-
-
-router.get('/addtocart',authenticate,(req,res)=>{
-  return res.send(req.root)
 })
 
 router.get('/logout',async(req,res)=>{
@@ -214,7 +192,7 @@ router.get('/adminlogout',async(req,res)=>{
 })
 
 
-router.get('/admindashboard',authenticate1,(req,res)=>{
+router.get('/checkadminlogin',authenticate1,(req,res)=>{
 
   return res.send(req.userRoot)
 })

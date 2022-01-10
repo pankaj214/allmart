@@ -77,6 +77,7 @@ const Login = () => {
       localStorage.setItem('state',1)
         localStorage.setItem('decision',1)
       setTimeout(() => {
+        alert('Welcome back')
         history.push("/dashboard",{replace:true});
       }, 1000);
     } else {

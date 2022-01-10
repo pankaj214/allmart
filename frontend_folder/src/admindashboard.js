@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom'
 import {Button} from 'react-bootstrap'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "./footer";
 
 const Admindashboard = () => {
 
@@ -11,7 +12,7 @@ const Admindashboard = () => {
 
 
   const callDashboardPage=async()=>{
-    const res=await fetch('http://localhost:5000/api/admindashboard',{
+    const res=await fetch('http://localhost:5000/api/checkadminlogin',{
       method:'GET',
       headers:{
         Accept:'application/json',
@@ -57,7 +58,7 @@ const Admindashboard = () => {
                    
                 </div>
                
-     
+     <Footer/>
     <ToastContainer/>
   </Fragment>;
 };
