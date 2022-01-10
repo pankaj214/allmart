@@ -5,3 +5,17 @@ body {
   color: #05386B;
 
 }
+.thankback
+{
+  background-image: url("https://image.shutterstock.com/image-vector/illustration-colorful-balloons-ribbons-shiny-260nw-1710672826.jpg");
+  background-size: cover; 
+ width: 100%;
+  padding-top:80px;
+  border-radius: 5px;
+    padding:20px;
+}
+
+.suggestion::placeholder{
+  font-weight: bold;
+}
+

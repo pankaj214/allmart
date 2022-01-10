@@ -3,7 +3,6 @@ import {Input, Typography} from '@material-ui/core'
 import {Container,Row,Card,Button} from 'react-bootstrap'
 import {Grid} from '@material-ui/core';
 import {useHistory} from 'react-router-dom'
-import Rating from 'material-ui-rating'
 import Allmart from './images/allmart.png'
 import Appbar from "./appbar";
 import SearchIcon from '@material-ui/icons/Search';
@@ -77,10 +76,6 @@ return(
   <Card.Img variant="top"  style={{height:'25vh'}} src={Allmart} alt="Blog Photo"/>
   <Card.Body>
   <Card.Title style={{marginTop:'2%',textAlign:'center'}}>ITEM NAME</Card.Title>
-  
-  {/* Rating Code */}
-  {/* <span style={{textAlign:'center'}}><Rating value={3} max={5} onChange={(value) => console.log(`Rated with value ${value}`)}
-/></span> */}
 
 <h5 style={{textAlign:'center'}}>₹2500</h5>
 <span style={{textAlign:'center'}}>10% discount</span>

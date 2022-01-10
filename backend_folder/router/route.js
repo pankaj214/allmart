@@ -95,31 +95,8 @@ router.get('/checkLogin',authenticate,(req,res)=>{
 
 })
 
+
 router.get('/logout',async(req,res)=>{
-  
-  const token=sessionStorage.getItem('jwtoken')
-  if(token){
-    const verifyToken=jwt.verify(token,process.env.SECRET_KEY)
-
-    const root=await Employee.findOne({_id:verifyToken._id,"tokens.token":token})
-
-    // logout from one device
-    root.tokens=root.tokens.filter((currentElement)=>{
-      return currentElement.token!==token
-    })
-
-    await root.save()
-
-    sessionStorage.removeItem('jwtoken')
-  return res.status(200).json({message:'Now,you are logout'})
-
-  }
-  else if(token==null){
-  return res.status(400).json({error:'You are already logout'})
-}
-})
-
-router.get('/logoutall',async(req,res)=>{
   
   const token=sessionStorage.getItem('jwtoken')
   if(token){

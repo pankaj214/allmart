@@ -41,7 +41,7 @@ const Contact = () => {
     return(
 <Fragment>
             <Appbar/>
-           
+           <br/>
 <Container style={{marginTop:'2%',backgroundColor:'white'}}>
   <Row>
     <Col sm={6} lg={5}>
@@ -61,6 +61,7 @@ const Contact = () => {
         <input type="submit" value="Submit"></input>
 
         </form>
+        <br/>
         </div>
     </Col>
    <Col sm={6} lg={7}>
@@ -70,6 +71,7 @@ const Contact = () => {
   </Col>
   </Row>
 </Container>
+<br/>
 <Footer/>
     <ToastContainer/>
 </Fragment>

@@ -12,7 +12,7 @@ import bk8 from './images/bk8.jpeg';
 import bk1 from './images/bk1.jpg';
 import bk2 from './images/bk2.jpg';
 import bk3 from './images/bk3.jpg';
-import {Container,Image,Card,Button,Row,Col,Carousel,Table} from 'react-bootstrap';
+import {Container,Image,Card,Dropdown,Button,Row,Col,Carousel,Table} from 'react-bootstrap';
 import Footer from "./footer";
 
 const Dashboard = () => {
@@ -93,8 +93,18 @@ else{
   return <Fragment>
         <Appbar/>
         <span style={{display:'flex',justifyContent:'right',textAlign:'center',marginRight:'4%'}}>
-        <Button style={{backgroundColor:'#05386B',color:'white'}} href="/logout_">Logout from all devices</Button>&nbsp;
-        <Button style={{backgroundColor:'#05386B',color:'white'}} href="/viewhistory">ViewHistory</Button>
+        <Dropdown>
+  <Dropdown.Toggle style={{color:'#05386B'}} id="dropdown-basic">
+   <i className="fas fa-user">Profile</i>
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+    <Dropdown.Item href="/user_profile">Edit Profile</Dropdown.Item>
+    <Dropdown.Item href="/change_password">Change Password</Dropdown.Item>
+    <Dropdown.Item href="/view_history">Transaction History</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+       
         </span>
         <div className="bhaihead">
     <h2 style={{fontWeight:500,borderStyle:'solid',fontFamily:'Brush Script MT, Brush Script Std, cursive'}}>Hello, {name ? name  : 'Hello'}</h2>
@@ -174,38 +184,7 @@ else{
     </Carousel.Caption>
   </Carousel.Item>
 </Carousel>
-<br/>
-<Container >
-  <Row className="justify-content-md-center">
-   <span style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>USER PROFILE</span>
-  </Row>
-  </Container>
- <br/>
- <div className="container emp-profile">
-   <form method="POST" action="">
-     <div className="row">
-       <div className="col-md-4">
-       <img src="https://react.semantic-ui.com/images/avatar/small/christian.jpg" alt="John" style={{width:'50%'}}/><br/>
-       <Button id="password" href="/change_password" style={{marginTop:'5%',color:'white',backgroundColor:'#05386B'}}>Change Password</Button>
-       </div>
-       <div className="col-md-8">
-         <div className="profile-head">
-           <label htmlFor="username"><b>Name: </b></label>
-         <input type="text" name="username" id="username" value="Name"/>
-         <label htmlFor="email"><b>Email id: </b></label>
-         <input type="text" value="email id" name="email" id="email"/>
-         <label htmlFor="userid"><b>User id: </b></label>
-         <input type="text" value="user id" name="userid" id="userid"/>
-         <label htmlFor="phonenumber"><b>Phone Number: </b></label>
-         <input type="text" value="phone number" name="phonenumber" id="phonenumber"/>
-         </div>
-       </div>
-     </div>
-     <span className="row">
-     <input type="submit" value="Update Profile" style={{color:'white',backgroundColor:'#05386B'}}/>&nbsp;
-     </span>
-     </form>
-</div>
+ 
 <br/><br/><br/>
 <Container >
   <Row className="justify-content-md-center">

@@ -5,14 +5,12 @@ import Register from "./credentials/register";
 import Error from "./error";
 import Dashboard from "./dashboard";
 import Home from "./home";
-import Appbar from "./appbar";
 import Addtocart from "./addtocart";
 import About from "./about";
 import RingLoader from 'react-spinners/RingLoader'
 import Contact from "./contact";
 import Viewmore from './viewmore'
 import Logout from './credentials/logout'
-import Logoutall from './credentials/logoutall'
 import Admindashboard from "./admindashboard";
 import Adminlogin from "./credentials/adminlogin";
 import Adminlogout from "./credentials/adminlogout";
@@ -20,6 +18,8 @@ import {initialState,reducer} from './reducer/UseReducer'
 import Viewhistory from "./viewhistory";
 import Changepassword from "./changepassword";
 import Checkout from "./checkout";
+import Thankyou from "./thankyou";
+import Editprofile from "./editprofile";
 
 export const UserContext=createContext()
 
@@ -52,13 +52,14 @@ const Routing =()=>{
         <Route exact path="/addtocart" component={Addtocart} />
         <Route exact path="/viewmoreitem" component={Viewmore} />
         <Route exact path="/logout" component={Logout} />
-        <Route exact path="/logout_" component={Logoutall} />
         <Route exact path="/adminlogin" component={Adminlogin} />
           <Route exact path="/admindashboard" component={Admindashboard} />
-          <Route exact path="/viewhistory" component={Viewhistory} />
+          <Route exact path="/view_history" component={Viewhistory} />
           <Route exact path="/adminlogout" component={Adminlogout} />
           <Route exact path="/change_password" component={Changepassword} /> 
           <Route exact path="/checkout" component={Checkout} />
+          <Route exact path="/thankyou_success" component={Thankyou}/>
+          <Route exact path="/user_profile" component={Editprofile}/>
         <Route component={Error} />
       </Switch>
     </BrowserRouter>

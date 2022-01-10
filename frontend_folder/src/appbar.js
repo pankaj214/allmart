@@ -108,17 +108,6 @@ return(
               <li className="nav-item">
                 <NavLink
                   exact
-                  to="/signin"
-                  activeClassName="active"
-                  className="nav-links"
-                  onClick={handleClick}
-                >
-                  Login
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  exact
                   to="/signup"
                   activeClassName="active"
                   className="nav-links"

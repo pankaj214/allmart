@@ -29,13 +29,11 @@ const Changepassword = () => {
          <input type="text" name="email" id="email"/>
          <label htmlFor="userid"><b>Enter Re-new Password: </b></label>
          <input type="password" style={{width: '100%',padding: '12px',marginTop: '6px',  marginBottom: '16px',resize: 'vertical' }} name="userid" id="userid"/>
+         <input type="submit" value="Save" style={{color:'white',backgroundColor:'#05386B'}}/>
          </div>
        </div>
      </div>
-     <span className="row">
-     <Button style={{backgroundColor:'#05386B',color:'white'}} href="/dashboard">Go to Dashboard</Button>&nbsp;
-     <input type="submit" value="Save" style={{color:'white',backgroundColor:'#05386B'}}/>
-     </span>
+     
      </form>
 </div>
 <br/>
