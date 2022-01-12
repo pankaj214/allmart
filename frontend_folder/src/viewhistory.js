@@ -36,7 +36,13 @@ const Viewhistory = () => {
     
     return (
         <>
-        <Appbar/>
+           <nav className='navbar'>
+            <div className="nav-container">
+            <div className="nav-logo">
+              <i className="fas fa-drafting-compass">&nbsp;</i>All Mart
+            </div>
+            </div>
+            </nav>
         <Container >
   <Row className="justify-content-md-center">
    <span style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>TRANSACTION HISTORY</span>
@@ -51,6 +57,8 @@ const Viewhistory = () => {
       <th>Actual Price</th>
       <th>Discount</th>
       <th>Discount price</th>
+      <th>You save</th>
+      <th>Purchased at</th>
     </tr>
   </thead>
   <tbody>
@@ -58,6 +66,8 @@ const Viewhistory = () => {
       <td>1</td>
       <td>Mark</td>
       <td>Otto</td>
+      <td>@mdo</td>
+      <td>@mdo</td>
       <td>@mdo</td>
       <td>@mdo</td>
       <td>@mdo</td>

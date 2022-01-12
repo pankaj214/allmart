@@ -1,13 +1,43 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Appbar from './appbar'
 import Footer from './footer'
+import {useHistory} from 'react-router-dom'
 import { Button,Container,Row } from 'react-bootstrap';
 const Editprofile = () => {
+  const history=useHistory()
+
+  const callEditProfile=async()=>{
+    const res=await fetch('http://localhost:5000/api/checkLogin',{
+       method:'GET',
+       headers:{
+   Accept:'application/json',
+   'Content-Type':'application/json'
+ },
+   })
+   const data=await res.json()
+   if(data.error==='Please be login'){
+       localStorage.setItem('decisions',0)
+       history.push('/signin')
+       setTimeout(()=>{toast.error(`${data.error}`, {
+         position: "top-center",
+       });},1000)
+      
+     } }
+     useEffect(()=>{
+ callEditProfile()
+     },[])
+
     return (
         <>
-            <Appbar/>
+        <nav className='navbar'>
+            <div className="nav-container">
+            <div className="nav-logo">
+              <i className="fas fa-drafting-compass">&nbsp;</i>All Mart
+            </div>
+            </div>
+            </nav>
       <br/>
             <Container >
   <Row className="justify-content-md-center">
@@ -16,7 +46,7 @@ const Editprofile = () => {
   </Container>
  <br/>
             <div className="container emp-profile">
-   <form method="POST" action="" enctype="multipart/form-data">
+   <form method="POST" action="" encType="multipart/form-data">
      <div className="row">
        <div className="col-md-4">
        <img src="https://react.semantic-ui.com/images/avatar/small/christian.jpg" alt="John" style={{width:'50%'}}/><br/>

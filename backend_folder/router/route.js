@@ -5,6 +5,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
 require("../connection");
+const nodeMailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport");
 const sessionStorage=require('sessionstorage')
 require("dotenv").config({ path: "./config.env" });
 const authenticate=require('../middleware/authenticate')
@@ -12,6 +14,12 @@ const authenticate1=require('../middleware/authenticate1')
 const Employee = require("../models/model");
 const User1=require('../models/model1')
 const User2=require('../models/modeladmin')
+
+const transporter=nodeMailer.createTransport(sendgridTransport({
+  auth:{
+    api_key:process.env.API
+  }
+}))
 
 
 router.post("/register", async (req, res) => {
@@ -33,19 +41,24 @@ router.post("/register", async (req, res) => {
   if (userid.length < 4) {
     return res.status(422).json({ error: "UserId should be greater than 4" });
   }
-  if (password.length < 8) {
+  const pass=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (!pass.test(password)) {
     return res
       .status(422)
-      .json({ error: "Password digits should be greater than 7" });
+      .json({ error: "Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:" });
   }
   try {
     const userExist = await Employee.findOne({ email: email });
     const userExist1 = await Employee.findOne({ phone: phone });
+    const userExist2 = await Employee.findOne({ userid: userid });
     if (userExist) {
       return res.status(422).json({ error: "Email already exists" });
     } else if (userExist1) {
       return res.status(422).json({ error: "Phone number already exists" });
     }
+    else if(userExist2){
+      return res.status(422).json({ error: "User id already exists" });
+    }      
     if (password == repassword) {
       const employee = new Employee({
         _id: mongoose.Types.ObjectId(),
@@ -60,8 +73,13 @@ router.post("/register", async (req, res) => {
     } else {
       return res.status(422).json({ error: "Password not matched" });
     }
-
-    res.status(201).json({ message: "Registration Successful" });
+    transporter.sendMail({
+      to:email,
+      from:process.env.EMAIL,
+      subject:"Registration Confirmation",
+      html:`<h1>Hello, ${username}</h1><h2 style="text-decoration:underline;">Welcome to the Allmart</h2><h3>Your Allmart Signup process is successfully completed</h3>`
+    })
+    res.status(201).json({ message: "Registration Successful\n Please check the mail" });
   } catch (err) {
     console.log(err);
   }

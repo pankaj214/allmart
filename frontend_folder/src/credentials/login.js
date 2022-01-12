@@ -163,9 +163,9 @@ const Login = () => {
           Login
         </Button>
         <Grid container>
-          <Grid item xs>
-            <Link to="#" style={{ color: "#05386B" }} variant="body2">
-              Forgot password?
+        <Grid item xs>
+            <Link to="/forgot_password" style={{ color: "#05386B" }} variant="body2">
+              forgot password?
             </Link>
           </Grid>
           <Grid item>

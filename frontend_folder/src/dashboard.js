@@ -40,11 +40,17 @@ const Dashboard = () => {
       });},1000)
      
     }
-
+    
 }
   
+const callModal=()=>{
+  toast.info(`Hello,\n\n Welcome to the dashboard`,{
+    position:"top-center",
+  })
+}
   useEffect(()=>{
       callDashboardPage()
+      callModal()
   },[])
   
   
@@ -94,6 +100,7 @@ else{
         <Appbar/>
         <span style={{display:'flex',justifyContent:'right',textAlign:'center',marginRight:'4%'}}>
         <Dropdown>
+          <span>{name}</span>&nbsp;&nbsp;
   <Dropdown.Toggle style={{color:'#05386B'}} id="dropdown-basic">
    <i className="fas fa-user">Profile</i>
   </Dropdown.Toggle>
@@ -101,16 +108,17 @@ else{
   <Dropdown.Menu>
     <Dropdown.Item href="/user_profile">Edit Profile</Dropdown.Item>
     <Dropdown.Item href="/change_password">Change Password</Dropdown.Item>
-    <Dropdown.Item href="/view_history">Transaction History</Dropdown.Item>
+    <Dropdown.Item href="/view_history">Your Purchase History</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
        
         </span>
         <div className="bhaihead">
-    <h2 style={{fontWeight:500,borderStyle:'solid',fontFamily:'Brush Script MT, Brush Script Std, cursive'}}>Hello, {name ? name  : 'Hello'}</h2>
-    <marquee direction="right" height="60" width="1360" bgcolor="transparent">
-        <h1 style={{fontWeight:350}}>Welcome back to our dashboard</h1>
+        <marquee direction="left" height="60" width="1360" bgcolor="transparent">
+        <h1 style={{fontWeight:350}}>Welcome back to our AllMart</h1>
     </marquee>
+        <marquee direction="right" height="60" width="1360" bgcolor="transparent">    
+        <h2 style={{fontWeight:500,borderStyle:'solid',fontFamily:'Brush Script MT, Brush Script Std, cursive'}}>Firstly, Let's take the review of the Allmart and grab their opportunities..</h2></marquee>
     </div>
 <Carousel>
   <Carousel.Item style={{height:"70vh"}}>
@@ -199,9 +207,7 @@ else{
   <Card.Body>
   <Card.Title style={{marginTop:'2%',textAlign:'center'}}>ITEM NAME</Card.Title>
   
-  {/* Rating Code */}
-  {/* <span style={{textAlign:'center'}}><Rating value={3} max={5} onChange={(value) => console.log(`Rated with value ${value}`)}
-/></span> */}
+ 
 
 <h5 style={{textAlign:'center'}}>₹2500</h5>
 <span style={{textAlign:'center'}}>10% discount</span>

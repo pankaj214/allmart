@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import {
   Avatar,
@@ -73,7 +73,7 @@ const Register = () => {
       }),
     });
     const data = await res.json();
-    if (data.message === "Registration Successful") {
+    if (data.message === "Registration Successful\n Please check the mail") {
       toast.success(`${data.message}`, {
         position: "top-center",
       });
@@ -86,7 +86,14 @@ const Register = () => {
       });
     }
   };
-
+  const callModal=()=>{
+    toast.warning('Please entered correct Email id and Phone number because we have verify and sent confirmation on your email',{
+      position:'top-center'
+    })
+  }
+  useEffect(()=>{
+        callModal()
+  },[])
   return (
     <>
             <Appbar/>

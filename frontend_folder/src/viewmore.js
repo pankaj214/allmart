@@ -33,7 +33,13 @@ callViewmore()
     return(
         <>
         
-        <Appbar/>
+        <nav className='navbar'>
+            <div className="nav-container">
+            <div className="nav-logo">
+              <i className="fas fa-drafting-compass">&nbsp;</i>All Mart
+            </div>
+            </div>
+            </nav>
         <br/><br/>
         <Container style={{borderRadius: '5px',
     backgroundColor: '#f2f2f2',color:'black',

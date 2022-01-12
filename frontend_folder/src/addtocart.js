@@ -30,7 +30,13 @@ const Addtocart = () => {
      },[])
   return (
     <Fragment>
-              <Appbar/>
+              <nav className='navbar'>
+            <div className="nav-container">
+            <div className="nav-logo">
+              <i className="fas fa-drafting-compass">&nbsp;</i>All Mart
+            </div>
+            </div>
+            </nav>
 <br/>
 <Container >
   <Row className="justify-content-md-center">

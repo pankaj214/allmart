@@ -20,6 +20,7 @@ import Changepassword from "./changepassword";
 import Checkout from "./checkout";
 import Thankyou from "./thankyou";
 import Editprofile from "./editprofile";
+import Forgotpassword from "./forgotpassword";
 
 export const UserContext=createContext()
 
@@ -60,6 +61,7 @@ const Routing =()=>{
           <Route exact path="/checkout" component={Checkout} />
           <Route exact path="/thankyou_success" component={Thankyou}/>
           <Route exact path="/user_profile" component={Editprofile}/>
+          <Route exact path="/forgot_password" component={Forgotpassword}/>
         <Route component={Error} />
       </Switch>
     </BrowserRouter>

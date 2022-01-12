@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const nodeMailer = require("nodemailer");
 require("./connection");
 require("dotenv").config({ path: "./config.env" });
 const mongoose = require("mongoose");
