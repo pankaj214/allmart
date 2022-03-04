@@ -50,7 +50,7 @@ const Forgotpassword = () => {
 
     const { email } = user;
 
-    const res = await fetch("http://localhost:5000/api/register", {
+    const res = await fetch("http://localhost:5000/api/resetpassword", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,10 +60,29 @@ const Forgotpassword = () => {
       }),
     });
     const data = await res.json();
+    if (data.message === "Email Sent Successfully") {
+      toast.success(`${data.message}`, {
+        position: "top-center",
+      });
+      setUser({email:''});
+      
+    } else {
+      toast.error(`${data.error}`, {
+        position: "top-center",
+      });
+    }
    
   };
     return (
         <>
+          <nav className='navbar'>
+            <div className="nav-container">
+            <div className="nav-logo">
+              <i className="fas fa-drafting-compass">&nbsp;</i>All Mart
+            </div>
+            </div>
+            </nav>
+            <br/>
          <Container
       component="main"
       style={{ backgroundColor: "white", borderRadius: "4%" }}
@@ -95,6 +114,7 @@ const Forgotpassword = () => {
                 onChange={handleInputs}
                 autoComplete="off"
                 required
+                autoFocus
               />
             </Grid>
          

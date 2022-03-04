@@ -29,15 +29,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  
   repassword: {
     type: String,
     required: true,
   },
+  
   date: {
     type: Date,
     required: true,
     default: Date.now,
   },
+  
+  resetToken:String,
+
+  expireToken:Date,
+  
   tokens: [
     {
       token: {

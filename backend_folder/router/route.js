@@ -14,6 +14,7 @@ const authenticate1=require('../middleware/authenticate1')
 const Employee = require("../models/model");
 const User1=require('../models/model1')
 const User2=require('../models/modeladmin')
+const crypto=require('crypto');
 
 const transporter=nodeMailer.createTransport(sendgridTransport({
   auth:{
@@ -77,7 +78,13 @@ router.post("/register", async (req, res) => {
       to:email,
       from:process.env.EMAIL,
       subject:"Registration Confirmation",
-      html:`<h1>Hello, ${username}</h1><h2 style="text-decoration:underline;">Welcome to the Allmart</h2><h3>Your Allmart Signup process is successfully completed</h3>`
+      html:`
+      <div style="color:#05386B; margin:5%; border-style:solid; text-align:center;">
+      <h1>Hello, ${username}</h1>
+      <h2 style="text-decoration:underline;">Welcome to the ALLMART</h2>
+      <h3>Your Allmart Signup process is successfully completed<br/>now try to login the allmart.</h3>
+      </div>
+`
     })
     res.status(201).json({ message: "Registration Successful\n Please check the mail" });
   } catch (err) {
@@ -106,6 +113,84 @@ router.post("/login", async (req, res) => {
     return res.status(422).json({ error: "Invalid Credentials" });
   }
 });
+
+router.post('/resetpassword',async(req,res)=>{
+  const { email } = req.body;
+  if (!email) {
+    return res.status(422).json({ error: "Please enter email id" });
+  }
+crypto.randomBytes(32,async(err,buffer)=>{
+  if(err){
+    return res.status(422).json({ error: "Invalid" });
+  }
+  const token=buffer.toString('hex')
+  const checkEmail  = await Employee.findOne({email:email})
+  if(!checkEmail){
+    return res.status(422).json({ error: "Email id doesn't match our records" });
+  }
+  checkEmail.resetToken = token
+  checkEmail.expireToken  = Date.now()  + 120000
+  const tokenSave=await checkEmail.save()
+  if(tokenSave){
+    transporter.sendMail({
+      to:checkEmail.email,
+      from:process.env.EMAIL,
+      subject:"Reset Password Link",
+      html:`
+      <div style="border-style:solid; margin:5%; color:#05386B; text-align:center;">
+      <h2 style="text-decoration:underline;">ALLMART</h2>
+      <h2>You requested for password reset</h2>
+            <h3>now,click in this <a href="http://localhost:3000/reset_password/${token}/${Date.now()  + 120000}">link</a> to reset password.</h3>
+            <h3>this link will be valid till 2 minutes.</h3>
+           </div> 
+      `
+    })
+    return res.status(200).json({message:'Email Sent Successfully'})
+  }
+  else{
+    return res.status(422).json({ error: "Server error" });
+  }
+  
+})
+})
+
+router.post('/passwordreset',async(req,res)=>{
+  const { password,repassword,token } = req.body;
+  if (!password || !repassword) {
+    return res.status(422).json({ error: "Please filled all the fields" });
+  }
+
+  const pass=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (!pass.test(password)) {
+    return res
+      .status(422)
+      .json({ error: "Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:" });
+  }
+
+  if(password!=repassword){
+    return res.status(422).json({ error: "Password not matched" });
+  }
+ 
+  const checkToken  = await Employee.findOne({resetToken:token,expireToken:{$gt:Date.now()}})
+  if(!checkToken){
+    return res.status(422).json({ error: "Sorry! Page session is expired" });
+}
+      checkToken.password=password
+      checkToken.repassword=repassword
+      checkToken.resetToken=undefined
+      checkToken.expireToken=undefined
+      const checkSave = await checkToken.save();
+      if(checkSave){
+        return res.status(200).json({message:'Password updated successfully'})
+      }
+      else{
+        return res.status(422).json({ error: "Password not updated" });
+
+      }
+
+
+
+})
 
 router.get('/checkLogin',authenticate,(req,res)=>{
 
