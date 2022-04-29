@@ -11,16 +11,16 @@ import Footer from "./footer";
 const About = () => {
   const history=useHistory()
   const handleP=()=>{
-    alert('Email: pchoubey822@gmail.com\nPhone: 9644605089');
+    alert(`Email: ${process.env.REACT_APP_FIRST_EMAIL}\nPhone: ${process.env.REACT_APP_FIRST_PHONE}`);
   }
   const handlePr=()=>{
-    alert('Email: pragyanshutayal2100@gmail.com\nPhone: 9575589724');
+    alert(`Email: ${process.env.REACT_APP_SECOND_EMAIL}\nPhone: ${process.env.REACT_APP_SECOND_PHONE}`);
   }
   const handlePa=()=>{
-    alert('Email: pk695283@gmail.com\nPhone: 8962434030');
+    alert(`Email:  ${process.env.REACT_APP_THIRD_EMAIL}\nPhone: ${process.env.REACT_APP_THIRD_PHONE}`);
   }
   const handlePu=()=>{
-    alert('Email: pushyasingh.23@gmail.com\nPhone: 6269846106');
+    alert(`Email:  ${process.env.REACT_APP_FOURTH_EMAIL}\nPhone: ${process.env.REACT_APP_FOURTH_PHONE}`);
   }
 
   const callAboutusPage=async()=>{

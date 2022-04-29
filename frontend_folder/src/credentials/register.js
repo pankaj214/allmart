@@ -87,7 +87,7 @@ const Register = () => {
     }
   };
   const callModal=()=>{
-    toast.warning('Please entered correct Email id and Phone number because we have verify and sent confirmation on your email',{
+    toast.warning('Please enter the correct email-id and phone number otherwise you will not receiving the confirm email',{
       position:'top-center'
     })
   }

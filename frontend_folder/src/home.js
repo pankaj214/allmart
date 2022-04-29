@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Input, Typography} from '@material-ui/core'
 import {Container,Row,Card,Button} from 'react-bootstrap'
 import {Grid} from '@material-ui/core';
@@ -56,6 +56,22 @@ else{
 }
   }
  
+  const fetchItemData=async()=>{
+    const res=await fetch('http://localhost:5000/api/home',{
+      method:'GET',
+      headers:{
+  Accept:'application/json',
+  'Content-Type':'application/json'
+},
+  })
+
+  const data=await res.json()
+  console.log(data)
+
+  }
+  useEffect(()=>{
+        fetchItemData()
+  },[])
 
 return(
 <>

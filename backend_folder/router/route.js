@@ -140,7 +140,7 @@ crypto.randomBytes(32,async(err,buffer)=>{
       <div style="border-style:solid; margin:5%; color:#05386B; text-align:center;">
       <h2 style="text-decoration:underline;">ALLMART</h2>
       <h2>You requested for password reset</h2>
-            <h3>now,click in this <a href="http://localhost:3000/reset_password/${token}/${Date.now()  + 120000}">link</a> to reset password.</h3>
+            <h3>now,click in this <a href="http://localhost:3000/reset_password/${token}">link</a> to reset password.</h3>
             <h3>this link will be valid till 2 minutes.</h3>
            </div> 
       `
