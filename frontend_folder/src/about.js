@@ -71,9 +71,9 @@ const About = () => {
     <div className="card">
       <img src={P} alt="Jane" style={{marginLeft:'25%',width:'50%'}}/>
       <div className="container">
-        <h2>Pankaj Choubey</h2>
+        <h2>{process.env.REACT_APP_FIRST_NAME}</h2>
         <p className="title">Head of the Team(Allmart)</p>
-        <p>Working on Backend</p>
+        <p>Working on backend and APIs</p>
         <p><button className="button" style={{backgroundColor:'#05386B'}} onClick={handleP}>Contact</button></p>
       </div>
     </div>
@@ -84,9 +84,9 @@ const About = () => {
     <div className="card">
       <img src="https://react.semantic-ui.com/images/avatar/small/christian.jpg" alt="Mike" style={{marginLeft:'25%',width:'50%'}}/>
       <div className="container">
-        <h2>Pragyanshu Tayal</h2>
+        <h2>{process.env.REACT_APP_SECOND_NAME}</h2>
         <p>Team Member(Allmart)</p>
-        <p>Working on Frontend Design</p>
+        <p>Working on frontend development</p>
         <p><button className="button" style={{backgroundColor:'#05386B'}} onClick={handlePr}>Contact</button></p>
       </div>
     </div>
@@ -96,9 +96,9 @@ const About = () => {
     <div className="card">
       <img src={Pr} alt="John" style={{marginLeft:'20%',width:'68%'}}/>
       <div className="container">
-        <h2>Pradeep Kumar</h2>
+        <h2>{process.env.REACT_APP_THIRD_NAME}</h2>
         <p>Team Member(Allmart)</p>
-        <p>Working on Documentation and web content</p>
+        <p>Working on documentation and web designing</p>
         <p><button className="button"style={{backgroundColor:'#05386B'}} onClick={handlePa}>Contact</button></p>
       </div>
     </div>
@@ -108,9 +108,9 @@ const About = () => {
     <div className="card">
       <img src={Pu} alt="John" style={{marginLeft:'28%',width:'45%'}}/>
       <div className="container">
-        <h2>Pushya Singh</h2>
+        <h2>{process.env.REACT_APP_FOURTH_NAME}</h2>
         <p>Team Member(Allmart)</p>
-        <p>Working on Documentation and web content</p>
+        <p>Working on documentation and web designing</p>
         <p><button className="button" style={{backgroundColor:'#05386B'}} onClick={handlePu}>Contact</button></p>
       </div>
     </div>
