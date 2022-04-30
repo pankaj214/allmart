@@ -22,7 +22,7 @@ import Thankyou from "./thankyou";
 import Editprofile from "./editprofile";
 import Forgotpassword from "./forgotpassword";
 import Setpasswordlink from "./setpasswordlink";
-
+import Adminitemsdata from "./adminitemsdata"
 export const UserContext=createContext()
 
 const Routing =()=>{
@@ -64,6 +64,7 @@ const Routing =()=>{
           <Route exact path="/user_profile" component={Editprofile}/>
           <Route exact path="/forgot_password" component={Forgotpassword}/>
           <Route exact path="/reset_password/:token" component={Setpasswordlink}/>
+          <Route exact path="/adminitemsdata" component={Adminitemsdata} />
         <Route component={Error} />
       </Switch>
     </BrowserRouter>

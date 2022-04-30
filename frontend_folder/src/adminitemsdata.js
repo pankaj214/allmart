@@ -1,6 +1,6 @@
 import React, { useState,useEffect,Fragment } from "react";
 import {useHistory} from 'react-router-dom'
-import {Button,Col,Row,Container,Dropdown} from 'react-bootstrap'
+import {Button,Col,Row,Container,Dropdown,Table} from 'react-bootstrap'
 import { ToastContainer, toast } from "react-toastify";
 import {TextField,makeStyles} from '@material-ui/core'
 import "react-toastify/dist/ReactToastify.css";
@@ -16,18 +16,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Admindashboard = () => {
+const Adminitemsdata = () => {
   const classes=useStyles()
   const history=useHistory()
   const [names,setNames]  = useState('')
-
+const [count,setCount] = useState(0)
   const [user, setUser] = useState({
     iname: "",
     iprice: "",
     idiscount: "",
     idescription: "",
-    icategory: ""  });
-const [image,setImage] = useState('')
+    icategory: "",
+    ipicture: ""
+  });
+
   let name, value;
   const handleInputs = (e) => {
     name = e.target.name;
@@ -35,13 +37,9 @@ const [image,setImage] = useState('')
     setUser({ ...user, [name]: value });
   };
 
-  const handleImages=(e)=>{
-    setImage(e.target.files[0])
-  }
   const handleClick = async (e) => {
     e.preventDefault();
-    const formdata=new FormData()
-    formdata.append("ipicture",image)
+
     const { iname,iprice,idiscount,idescription,icategory,ipicture } = user;
     const res = await fetch("http://localhost:5000/api/adminitemdata", {
       method: "POST",
@@ -54,7 +52,7 @@ const [image,setImage] = useState('')
         idiscount,
         idescription,
         icategory,
-        formdata
+        ipicture
       }),
     });
 
@@ -64,7 +62,7 @@ const [image,setImage] = useState('')
         position: "top-center",
       });
       setTimeout(() => {
-        history.push("/adminitemsdata",{replace:true});
+        history.push("/admindashboard",{replace:true});
       }, 1000);
     } else {
       toast.error(`${data.error}`, {
@@ -135,97 +133,40 @@ const callModal=()=>{
             </nav>
                
             <Container style={{marginTop:'2%',backgroundColor:'white'}}>
-  <Row>
-    <Col >
-        <h2>Create Items:</h2>   
-        <div>
-        <form className={classes.form} method="POST">
-        <TextField variant="outlined"
-          margin="normal"
-          required
-          type="text"
-          fullWidth
-          id="iname"
-          label="Item Name"
-          value={user.iname}
-          onChange={handleInputs}
-          name="iname"
-          autoComplete="off"
-          autoFocus/>
-        <TextField variant="outlined"
-          margin="normal"
-          required
-          type="number"
-          fullWidth
-          id="iprice"
-          label="Item Price"
-          value={user.iprice}
-          onChange={handleInputs}
-          name="iprice"
-          autoComplete="off"
-          autoFocus/>
-        <TextField variant="outlined"
-          margin="normal"
-          required
-          type="text"
-          fullWidth
-          id="idiscount"
-          label="Item Discount"
-          value={user.idiscount}
-          onChange={handleInputs}
-          name="idiscount"
-          autoComplete="off"
-          autoFocus/>
- <TextField variant="outlined"
-          margin="normal"
-          required
-          type="text"
-          fullWidth
-          id="idescription"
-          label="Item Description"
-          value={user.idescription}
-          onChange={handleInputs}
-          name="idescription"
-          autoComplete="off"
-          autoFocus/>
-          <TextField variant="outlined"
-          margin="normal"
-          required
-          type="text"
-          fullWidth
-          id="icategory"
-          label="Item Category"
-          value={user.icategory}
-          onChange={handleInputs}
-          name="icategory"
-          autoComplete="off"
-          autoFocus/>
-          <TextField variant="outlined"
-          margin="normal"
-          type="file"
-          fullWidth
-          id="ipicture"
-          label="Item Picture"
-          onChange={handleImages}
-          name="ipicture"
-          autoComplete="off"
-          autoFocus/>
-           <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          style={{ backgroundColor: "#05386B", color: "white" }}
-          className={classes.submit}
-          onClick={handleClick}
-        >
-          Submit
-        </Button>
-        </form>
-        <br/>
-        </div>
-    </Col>
-  
-  </Row>
+ <h2>List All Items</h2>
+            <Table>
+  <thead>
+    <tr>
+      <th>S.No.</th>
+      <th>Item Name</th>
+      <th>Item Price</th>
+      <th>Item Discount</th>
+      <th>Item Description</th>
+      <th>Item Category</th>
+      <th>Item Picture</th>
+      <th>Update Item</th>
+      <th>Delete</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <td>{count+1}</td>
+      <td><input type="text" name="" /></td>
+      <td><input type="number" name="" /></td>
+      <td><input type="text" name="" /></td>
+      <td><input type="text" name="" /></td>
+      <td><input type="text" name="" /></td>
+      <td><image src=""/></td>
+      <td><input type="button" value="Edit" /></td>
+      <td><input type="button" value="Delete" /></td>
+
+    </tr>
+   
+   
+  </tbody>
+</Table>
+
 </Container>
                <br/><br/>
                
@@ -283,6 +224,6 @@ const callModal=()=>{
     <ToastContainer/>
   </Fragment>;
 };
-export default Admindashboard;
+export default Adminitemsdata;
 
 

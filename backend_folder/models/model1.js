@@ -17,10 +17,18 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    itemdesignation:{
+    itemdescription:{
         type:String,
         required:true
     },
+    itemcategory:{
+        type:String,
+        required:true
+    },
+    itempicture:{
+        type:String,
+        default:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1kDyk4t1MZOnnXUT24zNSuVBtmeA0MPzUOg&usqp=CAU"
+    }
   
 })
 

@@ -277,6 +277,27 @@ router.get('/checkadminlogin',authenticate1,(req,res)=>{
   return res.send(req.userRoot)
 })
 
+router.post('/adminitemdata',async(req,res)=>{
+  const { iname,iprice,idiscount,idescription,icategory,ipicture } = req.body;
+  if (!iname || !iprice || !idiscount || !idescription || !icategory) {
+    return res.status(422).json({ error: "Please filled all the fields" });
+  }
+  const adminitemdata = new User1({
+    _id: mongoose.Types.ObjectId(),
+    itemname:iname,itemdiscount:idiscount,itemprice:iprice,itemdescription:idescription,itemcategory:icategory,itempicture:ipicture
+  });
+
+  await adminitemdata.save();
+  if(adminitemdata){
+
+    return res.status(200).json({ message: "Uploaded"});
+  }
+  else{
+
+    return res.status(422).json({ error: "Not Uploaded" });
+  }
+})
+
 
 
 

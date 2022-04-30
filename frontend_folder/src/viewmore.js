@@ -46,7 +46,7 @@ callViewmore()
     padding: '20px'}}>
     <Row>
         <Col lg={7} sm={6}>
-        <img src="https://m.media-amazon.com/images/I/81leb5g4asL._SL1500_.jpg" class="img-fluid"style={{border:"2px solid black"}} width="500" height="600" />
+        <img src="https://m.media-amazon.com/images/I/81leb5g4asL._SL1500_.jpg" className="img-fluid"style={{border:"2px solid black"}} width="500" height="600" />
         </Col>
         <Col style={{float:"right"}} lg={4} sm={6}>
         <h3>Redmi Note 10S 

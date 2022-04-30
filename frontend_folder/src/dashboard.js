@@ -12,6 +12,17 @@ import bk8 from './images/bk8.jpeg';
 import bk1 from './images/bk1.jpg';
 import bk2 from './images/bk2.jpg';
 import bk3 from './images/bk3.jpg';
+import ac from './images/ac.jpg';
+import ac1 from './images/ac1.jpg';
+import ac2 from './images/ac2.jpg';
+import ac3 from './images/ac3.jpg';
+import formal from './images/formal.jpg';
+import formal1 from './images/formal1.jpg';
+import formal2 from './images/formal2.jpg';
+import tv from './images/tv.jpg';
+import tv1 from './images/tv1.jpg';
+import mobile from './images/mobile.jpg';
+
 import {Container,Image,Card,Dropdown,Button,Row,Col,Carousel,Table} from 'react-bootstrap';
 import Footer from "./footer";
 
@@ -44,7 +55,7 @@ const Dashboard = () => {
 }
   
 const callModal=()=>{
-  toast.info(`Hello,\n\n Welcome to the dashboard`,{
+  toast.info(`Hello,\n\n Welcome back`,{
     position:"top-center",
   })
 }
@@ -100,9 +111,9 @@ else{
         <Appbar/>
         <span style={{display:'flex',justifyContent:'right',textAlign:'center',marginRight:'4%'}}>
         <Dropdown>
-          <span>{name}</span>&nbsp;&nbsp;
+          <span style={{textDecoration:'underline',fontWeight:500 }}>{name}</span>&nbsp;&nbsp;
   <Dropdown.Toggle style={{color:'#05386B'}} id="dropdown-basic">
-   <i className="fas fa-user">Profile</i>
+   <i className="fas fa-user">Settings</i>
   </Dropdown.Toggle>
 
   <Dropdown.Menu>
@@ -120,13 +131,13 @@ else{
         <marquee direction="right" height="60" width="1360" bgcolor="transparent">    
         <h2 style={{fontWeight:500,borderStyle:'solid',fontFamily:'Brush Script MT, Brush Script Std, cursive'}}>Firstly, Let's take the review of the Allmart and grab their opportunities..</h2></marquee>
     </div>
-<Carousel>
+<Carousel > 
   <Carousel.Item style={{height:"70vh"}}>
     <img
       className="d-block w-100"
       src={bk6}
     />
-    <Carousel.Caption>
+    <Carousel.Caption style={{color:'black'}}>
       <h3>Clothing Gears</h3>
       <p>All brands are available to see
            , Lets Grab it
@@ -136,9 +147,129 @@ else{
   <Carousel.Item style={{height:"70vh"}}>
     <img
       className="d-block w-100"
-      src={bk3}
+      src={ac}
     />
-    <Carousel.Caption>
+    <Carousel.Caption style={{color:'black'}}>
+      <h3>Clothing Gears</h3>
+      <p>All brands are available to see
+           , Lets Grab it
+      </p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item style={{height:"70vh"}}>
+    <img
+      className="d-block w-100"
+      src={ac1}
+    />
+    <Carousel.Caption style={{color:'black'}}>
+      <h3>Clothing Gears</h3>
+      <p>All brands are available to see
+           , Lets Grab it
+      </p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item style={{height:"70vh"}}>
+    <img
+      className="d-block w-100"
+      src={ac2}
+    />
+    <Carousel.Caption style={{color:'black'}}>
+      <h3>Clothing Gears</h3>
+      <p>All brands are available to see
+           , Lets Grab it
+      </p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item style={{height:"70vh"}}>
+    <img
+      className="d-block w-100"
+      src={ac3}
+    />
+    <Carousel.Caption style={{color:'black'}}>
+      <h3>Clothing Gears</h3>
+      <p>All brands are available to see
+           , Lets Grab it
+      </p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item style={{height:"70vh"}}>
+    <img
+      className="d-block w-100"
+      src={formal1}
+    />
+    <Carousel.Caption style={{color:'black'}}>
+      <h3>Clothing Gears</h3>
+      <p>All brands are available to see
+           , Lets Grab it
+      </p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item style={{height:"70vh"}}>
+    <img
+      className="d-block w-100"
+      src={formal}
+    />
+    <Carousel.Caption style={{color:'black'}}>
+      <h3>Clothing Gears</h3>
+      <p>All brands are available to see
+           , Lets Grab it
+      </p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item style={{height:"70vh"}}>
+    <img
+      className="d-block w-100"
+      src={formal}
+    />
+    <Carousel.Caption style={{color:'black'}}>
+      <h3>Clothing Gears</h3>
+      <p>All brands are available to see
+           , Lets Grab it
+      </p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item style={{height:"70vh"}}>
+    <img
+      className="d-block w-100"
+      src={formal2}
+    />
+    <Carousel.Caption style={{color:'black'}}>
+      <h3>Clothing Gears</h3>
+      <p>All brands are available to see
+           , Lets Grab it
+      </p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item style={{height:"70vh"}}>
+    <img
+      className="d-block w-100"
+      src={tv}
+    />
+    <Carousel.Caption style={{color:'black'}}>
+      <h3>Clothing Gears</h3>
+      <p>All brands are available to see
+           , Lets Grab it
+      </p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item style={{height:"70vh"}}>
+    <img
+      className="d-block w-100"
+      src={tv1}
+    />
+    <Carousel.Caption style={{color:'black'}}>
+      <h3>Clothing Gears</h3>
+      <p>All brands are available to see
+           , Lets Grab it
+      </p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item style={{height:"70vh"}}>
+    <img
+      className="d-block w-100"
+      src={mobile}
+    />
+    <Carousel.Caption style={{color:'black'}}>
       <h3>Clothing Gears</h3>
       <p>All brands are available to see
            , Lets Grab it
@@ -150,7 +281,7 @@ else{
       className="d-block w-100"
       src={bk1}
     />
-    <Carousel.Caption>
+    <Carousel.Caption style={{color:'black'}}>
       <h3>Clothing Gears</h3>
       <p>All brands are available to see
            , Lets Grab it
@@ -162,7 +293,7 @@ else{
       className="d-block w-100"
       src={bk2}
     />
-    <Carousel.Caption>
+    <Carousel.Caption style={{color:'black'}}>
       <h3>Clothing Gears</h3>
       <p>All brands are available to see
            , Lets Grab it
@@ -175,7 +306,7 @@ else{
       src={bk7}
     />
 
-    <Carousel.Caption>
+    <Carousel.Caption style={{color:'black'}}>
       <h3>More Everyday essentials to explore</h3>
       <p>All items we have are pocket friendly.</p>
     </Carousel.Caption>
@@ -186,7 +317,7 @@ else{
       src={bk8}
     />
 
-    <Carousel.Caption>
+    <Carousel.Caption style={{color:'black'}}>
       <h3>Inspired by your shopping trends</h3>
       <p>Trending near you , Popular near you</p>
     </Carousel.Caption>

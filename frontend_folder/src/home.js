@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import {Input, Typography} from '@material-ui/core'
 import {Container,Row,Card,Button} from 'react-bootstrap'
 import {Grid} from '@material-ui/core';
@@ -12,7 +12,7 @@ import Footer from './footer';
 const Home = () => {
  
   const history = useHistory()
-
+  const [itemdata,setItemdata] = useState([])
   const handleBlog=async()=>{
     const res=await fetch('http://localhost:5000/api/checkLogin',{
       method:'GET',
@@ -66,8 +66,7 @@ else{
   })
 
   const data=await res.json()
-  console.log(data)
-
+  setItemdata(data)
   }
   useEffect(()=>{
         fetchItemData()
@@ -84,25 +83,37 @@ return(
   <SearchIcon style={{marginLeft:'25%'}}/><Input style={{width:'50%',marginTop:'2%'}} placeholder='Search By Item Name' type='search'/>
 </Typography>
             
-            <Grid container style={{marginTop:'-4%'}}>
-                <Grid item xs={12} sm={6} md={4}>
-                <div > 
-    
-<Card style={{margin:'20%',width:'60%'}}>
-  <Card.Img variant="top"  style={{height:'25vh'}} src={Allmart} alt="Blog Photo"/>
-  <Card.Body>
-  <Card.Title style={{marginTop:'2%',textAlign:'center'}}>ITEM NAME</Card.Title>
+<marquee style={{fontSize:20,fontWeight:'bold'}}>Latest Mobiles,Brand New Formals and Eletronic Products like Brand T.V,Air Conditioner and many more products will be found here...</marquee>
 
-<h5 style={{textAlign:'center'}}>₹2500</h5>
-<span style={{textAlign:'center'}}>10% discount</span>
-  <span style={{float:'left',marginTop:'4%'}}>  <span style={{textAlign:'center'}}>This is an electronic item then you should purchase.</span> </span> 
+<Grid container style={{marginTop:'-4%'}}>
+    {itemdata.map((item,index)=>{
+      return(
+        <Grid item xs={12} sm={6} md={4} key={item._id}>
+        <div > 
+<Card style={{margin:'20%',width:'60%'}} >
+  <Card.Img variant="top" style={{height:'25vh'}} src={item.itempicture} alt="Blog Photo"/>
+  <Card.Body style={{overflow:'hidden',
+    whiteSpace:'nowrap',
+    textOverflow:'ellipsis'}}>
+  <Card.Title style={{marginTop:'2%',textAlign:'center',overflow:'hidden',
+    whiteSpace:'nowrap',
+    textOverflow:'ellipsis'
+}} >{item.itemname}</Card.Title>
+
+<h5 style={{textAlign:'center'}}>₹{item.itemprice}</h5>
+<h6 style={{textAlign:'center'}}>{item.itemdiscount}% discount</h6>
+  <h4 style={{float:'left',marginTop:'4%',}}>  <span style={{textAlign:'center'}}>{item.itemdescription}</span> </h4> 
   <Button style={{float:'right', marginTop:'10%',backgroundColor:'orange',}} onClick={handleBlog}>Add To Cart</Button>
     <Button style={{marginTop:'10%',float:'left', backgroundColor:'#293659',}} onClick={handleBlog1}>View More</Button>
   </Card.Body>
 </Card>
 </div>
 </Grid>
+      )
+    })}
 </Grid>
+
+
 <br/>      
 <Footer/>
 <ToastContainer/>
