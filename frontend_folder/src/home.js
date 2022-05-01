@@ -80,10 +80,9 @@ return(
   <Row className="justify-content-md-center">
    <span style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>LATEST PRODUCTS</span>
   </Row></Container>
-  <span>
 
-<img src={localStorage.getItem('userimage')} alt="Profile" style={{width:'4%',height:'4%',marginLeft:'5%',borderRadius:'50%'}}/>
-</span>
+{localStorage.getItem('userimage')?<img src={localStorage.getItem('userimage')} alt="Profile" style={{width:'7%',height:'7%',marginLeft:'5%',borderRadius:'50%'}}/>:<h5 style={{marginLeft:'5%'}}>Allmart</h5>}
+
   <SearchIcon style={{marginLeft:'25%'}}/><Input style={{width:'50%',marginTop:'2%'}} placeholder='Search By Item Name' type='search'/>
   
 </Typography>

@@ -71,59 +71,26 @@ const callModal=()=>{
   
   
   const handleBlog=async()=>{
-    const res=await fetch('http://localhost:5000/api/checkLogin',{
-      method:'GET',
-      headers:{
-  Accept:'application/json',
-  'Content-Type':'application/json'
-},
-  })
-  const data=await res.json()
-  if(data.error==='Please be login'){
-      localStorage.setItem('decisions',0)
-      history.push('/signin')
-      setTimeout(()=>{toast.error(`${data.error}`, {
-        position: "top-center",
-      });},1000)
-     
-    }
-   else{
+   
      history.push('/addtocart')
-   }
+   
   }
   const handleBlog1=async()=>{
-    const res=await fetch('http://localhost:5000/api/checkLogin',{
-      method:'GET',
-      headers:{
-  Accept:'application/json',
-  'Content-Type':'application/json'
-},
-  })
-  const data=await res.json()
-  if(data.error==='Please be login'){
-      localStorage.setItem('decisions',0)
-      history.push('/signin')
-      setTimeout(()=>{toast.error(`${data.error}`, {
-        position: "top-center",
-      });},1000)
-     
-    }
-else{
+  
   history.push('/viewmoreitem')
-}
-localStorage.setItem('username',name.username)
   }
+  localStorage.setItem('userimage',name.userimage)
+
   return <Fragment>
         <Appbar/>
         <span style={{display:'flex',justifyContent:'right',textAlign:'center',marginRight:'4%'}}>
-<img src={name.userimage} alt="Profile" style={{width:'3%',height:'3%',float:'right',borderRadius:'50%'}}/>
         <Dropdown>
-          <span style={{textDecoration:'underline',fontWeight:500 }}>{name.username}</span>&nbsp;&nbsp;
   <Dropdown.Toggle style={{color:'#05386B'}} id="dropdown-basic">
-   <i className="fas fa-user">Settings</i>
+   <i className="fas fa-user">{name.userid}</i>
   </Dropdown.Toggle>
 
   <Dropdown.Menu>
+  <img src={name.userimage} alt="Profile" style={{width:'30%',height:'30%',marginLeft:'30%',borderRadius:'50%'}}/>
     <Dropdown.Item href="/user_profile">Edit Profile</Dropdown.Item>
     <Dropdown.Item href="/change_password">Change Password</Dropdown.Item>
     <Dropdown.Item href="/view_history">Transactions</Dropdown.Item>

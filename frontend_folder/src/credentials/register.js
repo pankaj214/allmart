@@ -94,6 +94,28 @@ const Register = () => {
   useEffect(()=>{
         callModal()
   },[])
+
+  if(localStorage.getItem('decision')==1){
+    toast.error('You are already Logged In', {
+      position: "top-center",
+    });
+  return (
+
+<>
+<Appbar />
+
+    <Container
+      component="main"
+      style={{ marginTop:'6%', backgroundColor: "white", height: "20vh", borderRadius: "1%" }}
+      maxWidth="xs"
+    >
+      <div style={{display:'flex',justifyContent:'center',textAlign:'center',textDecoration:'underline',paddingTop:'20%',color:'black',fontSize:'20px',fontWeight:'bold' }}>
+       You are already Logged In.Please go to the Dashboard
+      </div>
+      <ToastContainer />
+    </Container></>
+  )}
+  else{
   return (
     <>
             <Appbar/>
@@ -218,6 +240,6 @@ const Register = () => {
       </div>
       <ToastContainer />
     </Container></>
-  );
+  );}
 };
 export default Register;

@@ -24,6 +24,7 @@ const Logout = () => {
          dispatch({type:'USER',payload:false})
          localStorage.setItem('decision',0)
          localStorage.removeItem('state')
+         localStorage.removeItem('userimage')
           history.push('/signin', {replace:true})
           setTimeout(()=>{toast.success(`${data.message}`, {
             position: "top-center",
@@ -34,6 +35,7 @@ const Logout = () => {
                 dispatch({type:'USER',payload:false})
                 localStorage.removeItem('state')
                 localStorage.setItem('decision',0)
+                localStorage.removeItem('userimage')
                  history.push('/signin', {replace:true})
                  setTimeout(()=>{toast.error(`${data.error}`, {
                    position: "top-center",
