@@ -298,6 +298,45 @@ router.post('/adminitemdata',async(req,res)=>{
   }
 })
 
+router.post('/contactdata',async(req,res)=>{
+  const { username,
+    email,
+    phone,
+    feedback } = req.body;
+  if (!username || !email || !phone || !feedback ) {
+    return res.status(422).json({ error: "Please filled all the fields" });
+  }
+
+  
+  const contactdata = await Employee.updateOne({email:email},{
+    $set:{
+      feedback:feedback
+    }
+  })
+
+  
+  if(contactdata.ok){
+    transporter.sendMail({
+      to:email ,
+      from:process.env.EMAIL,
+      subject:"Thanks for contact us",
+      html:`
+      <div style="border-style:solid; margin:5%; color:#05386B; text-align:center;">
+      <h2 style="text-decoration:underline;">ALLMART</h2>
+      <h2>Thank you,We have got your feedback/query/suggestion we will see this further and revert back into 2-3 working days.</h2>
+            
+           </div> 
+      `
+    })
+    return res.status(200).json({ message: "Please check your mail"});
+  }
+  else{
+
+    return res.status(422).json({ error: "Not Uploaded" });
+  }
+    
+})
+
 
 
 

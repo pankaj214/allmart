@@ -54,6 +54,9 @@ const Thankyou = () => {
         <h4 className='text-center'>
             Having trouble? <a href="/contact" style={{textDecoration:"underline",color:"blue"}}>Contact us</a>
         </h4>
+        <h4 className='text-center'>
+        Go to <a href="/dashboard" style={{textDecoration:'underline',color:'blue'}}>Dashboard</a>
+        </h4>
         </div>
     </Row>
 </Container>

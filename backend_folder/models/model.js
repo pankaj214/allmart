@@ -34,11 +34,21 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  
+  feedback:[{
+    type:String
+  }],
   
   date: {
     type: Date,
     required: true,
     default: Date.now,
+  },
+
+  userimage:{
+    type:String,
+    default:"https://react.semantic-ui.com/images/avatar/small/christian.jpg",
   },
   
   resetToken:String,

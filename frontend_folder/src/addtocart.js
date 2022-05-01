@@ -40,7 +40,7 @@ const Addtocart = () => {
 <br/>
 <Container >
   <Row className="justify-content-md-center">
-   <span style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>ADD CART LIST</span>
+   <span style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>Your CART PRODUCTS</span>
   </Row>
   </Container>
   <br/>

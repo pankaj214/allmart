@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  adminimage:{
+  type:String,
+  default:"https://react.semantic-ui.com/images/avatar/small/christian.jpg",
+  },
   tokens: [
     {
       token: {

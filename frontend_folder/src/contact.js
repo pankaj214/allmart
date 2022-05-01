@@ -1,4 +1,4 @@
-import {Container,Row,Col} from 'react-bootstrap'
+import {Container,Row,Col,Button} from 'react-bootstrap'
 import Contacts from './images/contact.jpeg';
 import React, {useEffect, Fragment,useState } from "react";
 import {useHistory} from 'react-router-dom'
@@ -10,15 +10,9 @@ import Footer from './footer';
 import {TextField} from '@material-ui/core'
 const Contact = () => {
   const history=useHistory()
-  const [names,setNames]  = useState('')
-  const [contactdata,setContactdata] = useState([])
-
+  const [itemdata,setItemdata] = useState('')
   const [user, setUser] = useState({
-    iname: "",
-    iprice: "",
-    idiscount: "",
-    idescription: "",
-    icategory: ""  });
+feedback:"" });
   let name, value;
   const handleInputs = (e) => {
     name = e.target.name;
@@ -29,28 +23,30 @@ const Contact = () => {
   
   const handleClick = async (e) => {
     e.preventDefault();
-    const { iname,iprice,idiscount,idescription,icategory } = user;
-    const res = await fetch("http://localhost:5000/api/adminitemdata", {
+    const username = itemdata.username;
+    const email = itemdata.email;
+    const phone = itemdata.phone;
+    const { feedback } = user;
+    const res = await fetch("http://localhost:5000/api/contactdata", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        iname,
-        iprice,
-        idiscount,
-        idescription,
-        icategory,
+        username,
+        email,
+        phone,
+        feedback
       }),
     });
 
     const data = await res.json();
-    if (data.message === "Uploaded") {
+    if (data.message ==="Please check your mail") {
       toast.success(`${data.message}`, {
         position: "top-center",
       });
       setTimeout(() => {
-        history.push("/adminitemsdata",{replace:true});
+        history.push("/",{replace:true});
       }, 1000);
     } else {
       toast.error(`${data.error}`, {
@@ -70,8 +66,9 @@ const Contact = () => {
     })
 
     const data=await res.json()
-    setContactdata(data._id)
-    console.log(contactdata)
+    setItemdata(data)
+   
+
     if(data.error==='Please be login'){
       localStorage.setItem('decision',0)
       history.push('/signin')
@@ -89,49 +86,29 @@ const Contact = () => {
     return(
 <Fragment>
             <Appbar/>
-           <br/>
+           
 <Container style={{marginTop:'2%',backgroundColor:'white'}}>
   <Row>
     <Col sm={6} lg={5}>
-        <h2>Contact Us:</h2>   
         <div>
         <form method="POST">
-        
-        <TextField variant="outlined"
-          margin="normal"
-          type="text"
-          fullWidth
-          id="name"
-          label="Your Name"
-          onChange={handleInputs}
-          name="name"
-          autoComplete="off"
-          autoFocus/>
-        <TextField variant="outlined"
-          margin="normal"
-          type="email"
-          fullWidth
-          id="email"
-          label="Your Email ID"
-          onChange={handleInputs}
-          name="email"
-          autoComplete="off"
-          autoFocus/>
-        <TextField variant="outlined"
-          margin="normal"
-          type="number"
-          fullWidth
-          id="phone"
-          label="Your Phone Number"
-          onChange={handleInputs}
-          name="phone"
-          autoComplete="off"
-          autoFocus/>
-        <label htmlFor="subject">Any Feedback/Suggestion</label>
-        <textarea id="subject" name="subject" placeholder="Write something..." style={{height:200}}></textarea>
+        <label htmlFor="name">Your Name:</label>
+        <input type="text" readOnly onChange={handleInputs} id="name" name="name" value={itemdata.username}/>
+         <label htmlFor="email">Your Email ID:</label>
+        <input type="email" readOnly onChange={handleInputs} id="email" name="email" value={itemdata.email}/>
+          <label htmlFor="phone">Your Phone:</label>
+        <input type="number" readOnly onChange={handleInputs} id="phone" name="phone" value={itemdata.phone}/>
+        <label htmlFor="feedback">Any Feedback/Suggestion</label>
+        <textarea id="feedback" required name="feedback" placeholder="Write something..." style={{height:200}} value={user.feedback} onChange={handleInputs}></textarea>
 
-        <input type="submit" value="Submit"/>
-
+        <Button
+          type="submit"
+          variant="contained"
+          style={{ backgroundColor: "#05386B", color: "white" }}
+          onClick={handleClick}
+        >
+          Submit
+        </Button>
         </form>
         <br/>
         </div>

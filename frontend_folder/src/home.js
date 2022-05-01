@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react';
-import {Input, Typography} from '@material-ui/core'
 import {Container,Row,Card,Button} from 'react-bootstrap'
-import {Grid} from '@material-ui/core';
+import {Typography,AccordionSummary,AccordionDetails,Accordion,Grid,Input} from '@material-ui/core';
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {useHistory} from 'react-router-dom'
 import Allmart from './images/allmart.png'
 import Appbar from "./appbar";
@@ -78,12 +78,19 @@ return(
 <Typography variant="h5" >
 <Container >
   <Row className="justify-content-md-center">
-   <span style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>ITEMS</span>
+   <span style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>LATEST PRODUCTS</span>
   </Row></Container>
+  <span>
+
+<img src={localStorage.getItem('userimage')} alt="Profile" style={{width:'4%',height:'4%',marginLeft:'5%',borderRadius:'50%'}}/>
+</span>
   <SearchIcon style={{marginLeft:'25%'}}/><Input style={{width:'50%',marginTop:'2%'}} placeholder='Search By Item Name' type='search'/>
+  
 </Typography>
-            
-<marquee style={{fontSize:20,fontWeight:'bold'}}>Latest Mobiles,Brand New Formals and Eletronic Products like Brand T.V,Air Conditioner and many more products will be found here...</marquee>
+
+
+<marquee style={{fontSize:20,fontWeight:'bold'}}>**Latest Mobiles,Brand New Formals and Eletronic Products like Brand T.V,Air Conditioner and many more products will be found here...**</marquee>
+<marquee style={{fontSize:20,fontWeight:'bold'}}>**Grab it**</marquee>
 
 <Grid container style={{marginTop:'-4%'}}>
     {itemdata.map((item,index)=>{
@@ -113,8 +120,27 @@ return(
     })}
 </Grid>
 
-
-<br/>      
+<h5 style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>Frequently asked questions:(FAQ)</h5>
+<br/>
+<Accordion style={{ width: '100%' }}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+        >
+          <Typography
+            style={{
+              fontWeight: 10,
+            }}
+          >
+            What is register and login procedure?
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>In Allmart,you will entered correct details like email id, phone number because when you entered wrong details then you will not apply for login after register you will get confirmation mail then after you will apply for login. </Typography>
+        </AccordionDetails>
+       
+      </Accordion>
+      <br/><br/>
 <Footer/>
 <ToastContainer/>
 </>
