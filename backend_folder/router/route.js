@@ -337,6 +337,46 @@ router.post('/contactdata',async(req,res)=>{
     
 })
 
+router.post('/changepassword',async(req,res)=>{
+  const { email,
+    currentpassword,
+    newpassword,
+    renewpassword } = req.body;
+  if ( !currentpassword || !newpassword || !renewpassword ) {
+    return res.status(422).json({ error: "Please filled all the fields" });
+  }
+
+  const checkpassword=await Employee.findOne({email:email})
+ const isMatch = await bcrypt.compare(currentpassword, checkpassword.password);
+  if(!isMatch){
+    return res.status(422).json({ error: "Current password not matched" });
+
+  }
+  const pass=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (!pass.test(newpassword)) {
+    return res
+      .status(422)
+      .json({ error: "Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:" });
+  }
+
+  if(newpassword!=renewpassword){
+    return res.status(422).json({ error: "Password not matched" });
+  }
+
+ 
+  checkpassword.password=newpassword
+  checkpassword.repassword=renewpassword
+  const checkSave = await checkpassword.save()
+  if(checkSave){
+    return res.status(200).json({ message: "Password updated successfully"});
+  }
+  else{
+    return res.status(422).json({ error: "Password not updated" });
+
+  }
+
+})
+
 
 
 

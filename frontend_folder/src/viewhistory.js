@@ -58,21 +58,14 @@ const Viewhistory = () => {
       <th>Discount</th>
       <th>Discount price</th>
       <th>You save</th>
+      <th>Status</th>
       <th>Purchased at</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>1</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr>
- 
+    
+     Have not bought anything yet.
+   
   </tbody>
 </Table>
 <br/><br/><br/><br/>

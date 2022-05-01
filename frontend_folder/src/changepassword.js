@@ -1,4 +1,4 @@
-import React, {useEffect, Fragment } from 'react'
+import React, {useEffect, Fragment,useState } from 'react'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Appbar from './appbar';
@@ -7,6 +7,51 @@ import {Row,Container,Button} from 'react-bootstrap'
 import Footer from './footer';
 const Changepassword = () => {
   const history=useHistory()
+  const [profile,setProfile] = useState('')
+  const [user, setUser] = useState({
+    currentpassword:"",
+    newpassword:"",
+    renewpassword:"" });
+      let name, value;
+      const handleInputs = (e) => {
+        name = e.target.name;
+        value = e.target.value;
+        setUser({ ...user, [name]: value });
+      };
+    
+      
+      const handleClick = async (e) => {
+        e.preventDefault();
+        const email = profile.email;
+        const { currentpassword,newpassword,renewpassword} = user;
+        const res = await fetch("http://localhost:5000/api/changepassword", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            currentpassword,
+            newpassword,
+            renewpassword
+          }),
+        });
+    
+        const data = await res.json();
+        if (data.message ==="Password updated successfully") {
+          toast.success(`${data.message}`, {
+            position: "top-center",
+          });
+          setTimeout(() => {
+            history.push("/dashboard",{replace:true});
+          }, 1000);
+        } else {
+          toast.error(`${data.error}`, {
+            position: "top-center",
+          });
+        }
+      };
+    
 
   const callChangePassword=async()=>{
     const res=await fetch('http://localhost:5000/api/checkLogin',{
@@ -17,6 +62,7 @@ const Changepassword = () => {
  },
    })
    const data=await res.json()
+   setProfile(data)
    if(data.error==='Please be login'){
        localStorage.setItem('decisions',0)
        history.push('/signin')
@@ -46,20 +92,20 @@ const Changepassword = () => {
   </Container>
   <br/>
             <div className="container emp-profile">
-   <form method="POST" action="">
+   <form method="POST">
      <div className="row">
        <div className="col-md-4">
-       <img src="https://react.semantic-ui.com/images/avatar/small/christian.jpg" alt="John" style={{width:'50%'}}/>
+       <img src={profile.userimage} alt="John" style={{width:'50%'}}/>
        </div>
        <div className="col-md-8">
          <div className="profile-head">
-           <label htmlFor="username"><b>Enter Current Password: </b></label>
-         <input type="password" style={{width: '100%',padding: '12px',marginTop: '6px',  marginBottom: '16px',resize: 'vertical' }} name="username" id="username"/>
-         <label htmlFor="email"><b>Enter New Password: </b></label>
-         <input type="text" name="email" id="email"/>
-         <label htmlFor="userid"><b>Enter Re-new Password: </b></label>
-         <input type="password" style={{width: '100%',padding: '12px',marginTop: '6px',  marginBottom: '16px',resize: 'vertical' }} name="userid" id="userid"/>
-         <input type="submit" value="Save" style={{color:'white',backgroundColor:'#05386B'}}/>
+           <label htmlFor="currentpassword"><b>Enter Current Password: </b></label>
+         <input type="password" style={{width: '100%',padding: '12px',marginTop: '6px',  marginBottom: '16px',resize: 'vertical' }} value={user.currentpassword} onChange={handleInputs} name="currentpassword" id="currentpassword"/>
+         <label htmlFor="newpassword"><b>Enter New Password: </b></label>
+         <input type="password" name="newpassword" id="newpassword" style={{width: '100%',padding: '12px',marginTop: '6px',  marginBottom: '16px',resize: 'vertical' }} value={user.newpassword} onChange={handleInputs}/>
+         <label htmlFor="renewpassword"><b>Enter Re-new Password: </b></label>
+         <input type="text" style={{width: '100%',padding: '12px',marginTop: '6px',  marginBottom: '16px',resize: 'vertical' }} name="renewpassword" id="renewpassword" value={user.renewpassword} onChange={handleInputs}/>
+         <input type="submit" value="Save" style={{color:'white',backgroundColor:'#05386B'}} onClick={handleClick}/>
          </div>
        </div>
      </div>
