@@ -98,7 +98,7 @@ feedback:"" });
         <input type="email" readOnly onChange={handleInputs} id="email" name="email" value={itemdata.email}/>
           <label htmlFor="phone">Your Phone:</label>
         <input type="number" readOnly onChange={handleInputs} id="phone" name="phone" value={itemdata.phone}/>
-        <label htmlFor="feedback">Any Feedback/Suggestion</label>
+        <label htmlFor="feedback">Any Feedback/Suggestion/Query</label>
         <textarea id="feedback" required name="feedback" placeholder="Write something..." style={{height:200}} value={user.feedback} onChange={handleInputs}></textarea>
 
         <Button

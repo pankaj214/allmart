@@ -72,7 +72,7 @@ const [count,setCount] = useState(0)
   };
 
 
-  const callDashboardPage=async()=>{
+  const callAdminitemsPage=async()=>{
     const res=await fetch('http://localhost:5000/api/checkadminlogin',{
       method:'GET',
       headers:{
@@ -90,18 +90,13 @@ const [count,setCount] = useState(0)
       });},1000)
      
     }
-    setNames(data.adminid)
+    setNames(data)
     
 
 }
-const callModal=()=>{
-  toast.info(`Hello,\n\n Welcome back`,{
-    position:"top-center",
-  })
-}
+
   useEffect(()=>{
-      callDashboardPage()
-      callModal()
+      callAdminitemsPage()
   },[])
   
   
@@ -114,15 +109,18 @@ const callModal=()=>{
             </div>
             <span style={{display:'flex',justifyContent:'right',textAlign:'center'}}>
         <Dropdown>
-          <span style={{textDecoration:'underline',fontWeight:500 }}>{names}</span>&nbsp;&nbsp;
+         
   <Dropdown.Toggle style={{color:'#05386B'}} id="dropdown-basic">
-   <i className="fas fa-user">Settings</i>
+   <i className="fas fa-user">{names.adminid}</i>
   </Dropdown.Toggle>
 
   <Dropdown.Menu>
-    <Dropdown.Item href="/user_profile">Edit Profile</Dropdown.Item>
-    <Dropdown.Item href="/change_password">Change Password</Dropdown.Item>
-    <Dropdown.Item href="/adminitemsdata">Admin Items Data</Dropdown.Item>
+  <img src={names.adminimage} alt="Profile" style={{width:'30%',height:'30%',marginLeft:'30%',borderRadius:'50%'}}/>
+  <Dropdown.Item href="/admineditprofile">Edit Profile</Dropdown.Item>
+    <Dropdown.Item href="/adminseeusers">See all users</Dropdown.Item>
+    <Dropdown.Item href="/adminuserfeedback">See user feedback</Dropdown.Item>
+    <Dropdown.Item href="/adminchangepassword">Change Password</Dropdown.Item>
+  <Dropdown.Item href="/admindashboard">Go to dashboard</Dropdown.Item>
     <Dropdown.Item href="/adminlogout">Logout</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
@@ -131,9 +129,9 @@ const callModal=()=>{
            
             </div>
             </nav>
-               
+            <marquee scrollAmount={20} style={{fontWeight:'bolder',fontSize:'25px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px'}}>Welcome to Admin Panel</marquee>
             <Container style={{marginTop:'2%',backgroundColor:'white'}}>
- <h2>List All Items</h2>
+ <h2>View products Data</h2>
             <Table>
   <thead>
     <tr>
@@ -152,11 +150,11 @@ const callModal=()=>{
   <tbody>
     <tr>
     <td>{count+1}</td>
-      <td><input type="text" name="" /></td>
-      <td><input type="number" name="" /></td>
-      <td><input type="text" name="" /></td>
-      <td><input type="text" name="" /></td>
-      <td><input type="text" name="" /></td>
+      <td><input autoComplete="off" type="text" name="" /></td>
+      <td><input type="number" autoComplete="off" name="" /></td>
+      <td><input autoComplete="off" type="text" name="" /></td>
+      <td><input type="text" autoComplete="off" name="" /></td>
+      <td><input type="text" name="" autoComplete="off" /></td>
       <td><image src=""/></td>
       <td><input type="button" value="Edit" /></td>
       <td><input type="button" value="Delete" /></td>

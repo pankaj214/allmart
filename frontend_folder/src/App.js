@@ -23,6 +23,10 @@ import Editprofile from "./editprofile";
 import Forgotpassword from "./forgotpassword";
 import Setpasswordlink from "./setpasswordlink";
 import Adminitemsdata from "./adminitemsdata"
+import Admineditprofile from "./admineditprofile"
+import Adminchangepassword from "./adminchangepassword"
+import Adminseeusers from "./adminseeusers"
+import Adminuserfeedback from "./adminuserfeedback";
 export const UserContext=createContext()
 
 const Routing =()=>{
@@ -65,6 +69,10 @@ const Routing =()=>{
           <Route exact path="/forgot_password" component={Forgotpassword}/>
           <Route exact path="/reset_password/:token" component={Setpasswordlink}/>
           <Route exact path="/adminitemsdata" component={Adminitemsdata} />
+          <Route exact path="/admineditprofile" component={Admineditprofile} />
+          <Route exact path="/adminchangepassword" component={Adminchangepassword} />
+       <Route exact path="/adminseeusers" component={Adminseeusers} />
+       <Route exact path="/adminuserfeedback" component={Adminuserfeedback} />
         <Route component={Error} />
       </Switch>
     </BrowserRouter>

@@ -12,6 +12,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  admindateofbirth:{
+    type:String
+  },
+  adminphone:{
+    type:Number
+  },
   adminimage:{
   type:String,
   default:"https://react.semantic-ui.com/images/avatar/small/christian.jpg",

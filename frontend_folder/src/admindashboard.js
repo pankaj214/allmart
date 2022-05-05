@@ -20,6 +20,7 @@ const Admindashboard = () => {
   const classes=useStyles()
   const history=useHistory()
   const [names,setNames]  = useState('')
+  const [image,setImage] = useState('')
 
   const [user, setUser] = useState({
     iname: "",
@@ -27,7 +28,6 @@ const Admindashboard = () => {
     idiscount: "",
     idescription: "",
     icategory: ""  });
-const [image,setImage] = useState('')
   let name, value;
   const handleInputs = (e) => {
     name = e.target.name;
@@ -36,13 +36,12 @@ const [image,setImage] = useState('')
   };
 
   const handleImages=(e)=>{
-    setImage(e.target.files[0])
+       setImage(e.target.files[0])
   }
   const handleClick = async (e) => {
     e.preventDefault();
-    const formdata=new FormData()
-    formdata.append("ipicture",image)
-    const { iname,iprice,idiscount,idescription,icategory,ipicture } = user;
+
+    const { iname,iprice,idiscount,idescription,icategory } = user;
     const res = await fetch("http://localhost:5000/api/adminitemdata", {
       method: "POST",
       headers: {
@@ -54,7 +53,6 @@ const [image,setImage] = useState('')
         idiscount,
         idescription,
         icategory,
-        formdata
       }),
     });
 
@@ -92,7 +90,7 @@ const [image,setImage] = useState('')
       });},1000)
      
     }
-    setNames(data.adminid)
+    setNames(data)
     
 
 }
@@ -116,15 +114,18 @@ const callModal=()=>{
             </div>
             <span style={{display:'flex',justifyContent:'right',textAlign:'center'}}>
         <Dropdown>
-          <span style={{textDecoration:'underline',fontWeight:500 }}>{names}</span>&nbsp;&nbsp;
+        
   <Dropdown.Toggle style={{color:'#05386B'}} id="dropdown-basic">
-   <i className="fas fa-user">Settings</i>
+   <i className="fas fa-user">{names.adminid}</i>
   </Dropdown.Toggle>
 
   <Dropdown.Menu>
-    <Dropdown.Item href="/user_profile">Edit Profile</Dropdown.Item>
-    <Dropdown.Item href="/change_password">Change Password</Dropdown.Item>
-    <Dropdown.Item href="/adminitemsdata">Admin Items Data</Dropdown.Item>
+  <img src={names.adminimage} alt="Profile" style={{width:'30%',height:'30%',marginLeft:'30%',borderRadius:'50%'}}/>
+    <Dropdown.Item href="/admineditprofile">Edit Profile</Dropdown.Item>
+    <Dropdown.Item href="/adminseeusers">See all users</Dropdown.Item>
+    <Dropdown.Item href="/adminuserfeedback">See user feedback</Dropdown.Item>
+    <Dropdown.Item href="/adminchangepassword">Change Password</Dropdown.Item>
+    <Dropdown.Item href="/adminitemsdata">View products Data</Dropdown.Item>
     <Dropdown.Item href="/adminlogout">Logout</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
@@ -133,13 +134,14 @@ const callModal=()=>{
            
             </div>
             </nav>
+            <marquee scrollAmount={20} style={{fontWeight:'bolder',fontSize:'25px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px'}}>Welcome to Admin Panel</marquee>
                
-            <Container style={{marginTop:'2%',backgroundColor:'white'}}>
+            <Container style={{backgroundColor:'white'}}>
   <Row>
     <Col >
-        <h2>Create Items:</h2>   
+        <h2>Create Product Cards:</h2>   
         <div>
-        <form className={classes.form} method="POST">
+        <form className={classes.form} method="POST" encType="multipart/form-data">
         <TextField variant="outlined"
           margin="normal"
           required
@@ -200,7 +202,7 @@ const callModal=()=>{
           name="icategory"
           autoComplete="off"
           autoFocus/>
-          <TextField variant="outlined"
+             <TextField variant="outlined"
           margin="normal"
           type="file"
           fullWidth
@@ -210,7 +212,7 @@ const callModal=()=>{
           name="ipicture"
           autoComplete="off"
           autoFocus/>
-           <Button
+            <Button
           type="submit"
           fullWidth
           variant="contained"
@@ -220,7 +222,7 @@ const callModal=()=>{
         >
           Submit
         </Button>
-        </form>
+        </form>      
         <br/>
         </div>
     </Col>

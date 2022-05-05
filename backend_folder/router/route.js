@@ -15,7 +15,8 @@ const Employee = require("../models/model");
 const User1=require('../models/model1')
 const User2=require('../models/modeladmin')
 const crypto=require('crypto');
-
+const upload=require('../middleware/imagemulter')
+const imagevalidation=require('../middleware/imagevalidation')
 const transporter=nodeMailer.createTransport(sendgridTransport({
   auth:{
     api_key:process.env.API
@@ -278,13 +279,13 @@ router.get('/checkadminlogin',authenticate1,(req,res)=>{
 })
 
 router.post('/adminitemdata',async(req,res)=>{
-  const { iname,iprice,idiscount,idescription,icategory,ipicture } = req.body;
+  const { iname,iprice,idiscount,idescription,icategory } = req.body;
   if (!iname || !iprice || !idiscount || !idescription || !icategory) {
     return res.status(422).json({ error: "Please filled all the fields" });
   }
   const adminitemdata = new User1({
     _id: mongoose.Types.ObjectId(),
-    itemname:iname,itemdiscount:idiscount,itemprice:iprice,itemdescription:idescription,itemcategory:icategory,itempicture:ipicture
+    itemname:iname,itemdiscount:idiscount,itemprice:iprice,itemdescription:idescription,itemcategory:icategory
   });
 
   await adminitemdata.save();
@@ -309,7 +310,7 @@ router.post('/contactdata',async(req,res)=>{
 
   
   const contactdata = await Employee.updateOne({email:email},{
-    $set:{
+    $push:{
       feedback:feedback
     }
   })
@@ -377,6 +378,168 @@ router.post('/changepassword',async(req,res)=>{
 
 })
 
+router.post('/editprofile',async(req,res)=>{
+  
+  const checkemail = await Employee.findOne({email:req.body.email})
+  if(req.body.username){
+    checkemail.username=req.body.username
+  }
+
+  if(req.body.dateofbirth){
+    checkemail.dateofbirth=req.body.dateofbirth
+  }
+
+  if(req.body.addressfororders){
+    checkemail.addressfororders=req.body.addressfororders
+  }
+  const data=await checkemail.save()
+  
+
+  if(data){
+    return res.status(200).json({ message: "Profile updated"});
+
+  }
+  else{
+    return res.status(422).json({ error: "Profile not updated"});
+
+  }
+
+})
+
+router.post('/deleteprofile',async(req,res)=>{
+  const checkemail=await Employee.findOne({email:req.body.email})
+  checkemail.deleteprofilestatus="wants to delete"
+  const data=await checkemail.save()
+  if(data){
+    return res.status(200).json({message:"Your delete request send to website admin if, further process will done then you receive the mail."})
+  }
+else{
+  return res.status(422).json({error:"Delete request not send"})
+}
+})
+
+router.get('/seeusers',async(req,res)=>{
+  const data=await Employee.find()
+  return res.send(data)
+})
+
+router.post('/deletedprofile/:id',async(req,res)=>{
+  const data=await Employee.findOne({_id:req.params.id})
+
+  transporter.sendMail({
+    to:data.email ,
+    from:process.env.EMAIL,
+    subject:"ALLMART profile delete status",
+    html:`
+    <div style="border-style:solid; margin:5%; color:#05386B; text-align:center;">
+    <h2 style="text-decoration:underline;">ALLMART</h2>
+    <h2>Thank you, ${data.username} request to delete profile has been completed now,your profile has been deleted.</h2>
+          
+         </div> 
+    `
+  })
+
+  const deleteProfile=await Employee.deleteOne({_id:req.params.id})
+  if(deleteProfile){
+    return res.status(200).json({message:"Profile deleted and mail sent to user."})
+  }
+  else{
+    return res.status(422).json({error:"Profile not deleted"})
+  }
+
+  
+})
+
+router.post('/feedbackmail',async(req,res)=>{
+  const {emails,mailfeedback} = req.body
+  if(!mailfeedback){
+    return res.status(422).json({error:"Please write the mail"})
+  }
+
+  if(mailfeedback){
+    transporter.sendMail({
+      to:emails ,
+      from:process.env.EMAIL,
+      subject:"Your ALLMART Feedback/Query/Suggestion response",
+      html:`
+      <div style="border-style:solid; margin:5%; color:#05386B; text-align:center;">
+      <h2 style="text-decoration:underline;">ALLMART</h2>
+      <h2>Thank you, ${emails}\n
+      Response: ${mailfeedback}</h2>
+            
+           </div> 
+      `
+    })
+    return res.status(200).json({message:"Successfully sent"})
+  }
+  else{
+    return res.status(422).json({error:"Mail not sent"})
+
+  }
+
+})
+
+router.post('/admineditprofile',async(req,res)=>{
+  
+  const checkdata = await User2.findOne({_id:req.body.id})
+ 
+  if(req.body.adminid){
+    checkdata.adminid=req.body.adminid
+  }
+
+  if(req.body.admindateofbirth){
+    checkdata.admindateofbirth=req.body.admindateofbirth
+  }
+
+  if(req.body.adminphone){
+    checkdata.adminphone=req.body.adminphone
+  }
+  const data=await checkdata.save()
+  
+
+  if(data){
+    return res.status(200).json({ message: "Profile updated"});
+
+  }
+  else{
+    return res.status(422).json({ error: "Profile not updated"});
+
+  }
+
+})
+
+
+router.post('/adminchangepassword',async(req,res)=>{
+  const { adminid,
+    currentpassword,
+    newpassword,
+    renewpassword } = req.body;
+  if ( !currentpassword || !newpassword || !renewpassword ) {
+    return res.status(422).json({ error: "Please filled all the fields" });
+  }
+
+  const checkadminpassword=await User2.findOne({adminid:adminid})
+
+  if(currentpassword!=checkadminpassword.password){
+    return res.status(422).json({ error: "Current password not matched" });
+
+  }
+  if(newpassword!=renewpassword){
+    return res.status(422).json({ error: "Password not matched" });
+  }
+
+ 
+  checkadminpassword.password=newpassword
+  const checkSave = await checkadminpassword.save()
+  if(checkSave){
+    return res.status(200).json({ message: "Password updated successfully"});
+  }
+  else{
+    return res.status(422).json({ error: "Password not updated" });
+
+  }
+
+})
 
 
 

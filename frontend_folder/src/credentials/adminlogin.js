@@ -8,6 +8,7 @@ import {
   makeStyles,
   Container,
 } from "@material-ui/core";
+import {Dropdown} from 'react-bootstrap'
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { Link, useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -94,9 +95,17 @@ const Adminlogin = () => {
             <div className="nav-logo">
               <i className="fas fa-drafting-compass">&nbsp;</i>All Mart
             </div>
+            <span style={{display:'flex',justifyContent:'right',textAlign:'center'}}>
+        <Dropdown>
+  <Dropdown.Toggle style={{color:'#05386B'}} id="dropdown-basic">
+   <i className="fas fa-user"><a href="/admindashboard">Go to dashboard</a></i>
+  </Dropdown.Toggle>
+</Dropdown>
+       
+        </span>
             </div>
             </nav>
-
+            <marquee scrollAmount={20} style={{fontWeight:'bolder',fontSize:'25px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px'}}>Welcome to Admin Panel</marquee>
     <Container
       component="main"
       style={{ marginTop:'6%', backgroundColor: "white", height: "20vh", borderRadius: "1%" }}
@@ -117,7 +126,7 @@ const Adminlogin = () => {
             </div>
             </div>
             </nav>
-
+            
     <Container
     component="main"
     style={{ backgroundColor: "white", height: "54vh", borderRadius: "4%" }}

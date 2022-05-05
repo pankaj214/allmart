@@ -39,6 +39,16 @@ const userSchema = new mongoose.Schema({
   feedback:[{
     type:String
   }],
+
+  dateofbirth:{
+    type:String
+  },
+  addressfororders:{
+    type:String
+  },
+  deleteprofilestatus:{
+    type:String
+  },
   
   date: {
     type: Date,

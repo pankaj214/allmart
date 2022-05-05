@@ -78,13 +78,15 @@ return(
 <Typography variant="h5" >
 <Container >
   <Row className="justify-content-md-center">
-   <span style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>LATEST PRODUCTS</span>
+   <span style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif'}}>PRODUCTS</span>
   </Row></Container>
 
-{localStorage.getItem('userimage')?<img src={localStorage.getItem('userimage')} alt="Profile" style={{width:'7%',height:'7%',marginLeft:'5%',borderRadius:'50%'}}/>:<h5 style={{marginLeft:'5%'}}>Allmart</h5>}
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/2560px-Flag_of_India.svg.png" alt="Indian Flag" style={{width:'5%',height:'5%',marginLeft:'5%'}}/>
 
-  <SearchIcon style={{marginLeft:'25%'}}/><Input style={{width:'50%',marginTop:'2%'}} placeholder='Search By Item Name' type='search'/>
+  <SearchIcon style={{marginLeft:'15%'}}/><Input style={{width:'50%',marginTop:'2%'}} placeholder='Search By Item Name' type='search'/>
   
+  {localStorage.getItem('userimage') ? <img src={localStorage.getItem('userimage')} alt="Profile" style={{width:'5%',height:'5%',float:'right',marginRight:'5%',borderRadius:'50%'}}/> : <p style={{marginRight:'5%',visibility:'hidden',float:'right'}}>Allmart</p>}
+
 </Typography>
 
 
