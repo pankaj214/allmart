@@ -324,7 +324,7 @@ const handleDeleteitem=async(e,id)=>{
   </Row>
   </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button style={{backgroundColor:"#05386B"}} onClick={handleClose}>
             OK
           </Button>
         </Modal.Footer>
