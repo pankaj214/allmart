@@ -130,7 +130,7 @@ const Adminuserfeedback = () => {
   <Dropdown.Menu>
   <img src={names.adminimage} alt="Profile" style={{width:'30%',height:'30%',marginLeft:'30%',borderRadius:'50%'}}/>
   <Dropdown.Item href="/admineditprofile">Edit Profile</Dropdown.Item>
-    <Dropdown.Item href="/adminitemsdata">View products Data</Dropdown.Item>
+    <Dropdown.Item href="/adminitemsdata">View products</Dropdown.Item>
     <Dropdown.Item href="/adminseeusers">See all users</Dropdown.Item>
     <Dropdown.Item href="/adminchangepassword">Change Password</Dropdown.Item>
   <Dropdown.Item href="/admindashboard">Go to dashboard</Dropdown.Item>
@@ -170,8 +170,8 @@ const Adminuserfeedback = () => {
       <td>{item.phone}</td>
       <td>{item.userid}</td>
       <td><img src={item.userimage} style={{marginLeft:'18%',width:'30%',height:'30%'}} /></td>
-      <td><button onClick={(e)=>handleShow(e,item.feedback,item.username)} style={{backgroundColor:"#05386B", color:'white'}}>Show feedbacks</button></td>
-      <td>{<button onClick={(e)=>handleShow1(e,item.email,item._id)} style={{backgroundColor:"#05386B", color:'white'}}>Write mail for feedbacks.</button>}</td>
+      <td><button onClick={(e)=>handleShow(e,item.feedback,item.username)} style={{backgroundColor:"#05386B", color:'white'}}><i className="fa fa-eye" ></i>Show feedbacks</button></td>
+      <td>{<button onClick={(e)=>handleShow1(e,item.email,item._id)} style={{backgroundColor:"#05386B", color:'white'}}><i className="fa fa-edit" ></i>Write mail for feedbacks.</button>}</td>
 
     </tr>
 )}):<tr><h2 style={{textAlign:'center'}}>No users yet</h2></tr>

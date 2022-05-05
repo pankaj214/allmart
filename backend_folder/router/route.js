@@ -14,6 +14,7 @@ const authenticate1=require('../middleware/authenticate1')
 const Employee = require("../models/model");
 const User1=require('../models/model1')
 const User2=require('../models/modeladmin')
+const Addtocart=require('../models/model2')
 const crypto=require('crypto');
 const upload=require('../middleware/imagemulter')
 const imagevalidation=require('../middleware/imagevalidation')
@@ -230,6 +231,11 @@ router.get('/home',async(req,res)=>{
 
 })
 
+router.get('/recommendhome',async(req,res)=>{
+  const itemdata1=await User1.find().sort({itemname:-1}).limit(2)
+  res.send(itemdata1)
+})
+
 router.post('/adminlogin',async(req,res)=>{
 
   const { email, password } = req.body;
@@ -283,6 +289,8 @@ router.post('/adminitemdata',async(req,res)=>{
   if (!iname || !iprice || !idiscount || !idescription || !icategory) {
     return res.status(422).json({ error: "Please filled all the fields" });
   }
+  const data=await User1.findOne({itemname:iname})
+  if(!data){
   const adminitemdata = new User1({
     _id: mongoose.Types.ObjectId(),
     itemname:iname,itemdiscount:idiscount,itemprice:iprice,itemdescription:idescription,itemcategory:icategory
@@ -296,6 +304,45 @@ router.post('/adminitemdata',async(req,res)=>{
   else{
 
     return res.status(422).json({ error: "Not Uploaded" });
+  }}else{
+    return res.status(422).json({error:"Itemname already exists"})
+  }
+})
+
+router.post('/adminedititemdata',async(req,res)=>{
+  const { itemid,itemname,itemprice,itemdiscount,itemdescription,itemcategory } = req.body;
+  const checkitems = await User1.findOne({_id:itemid})
+  if(itemname){
+        checkitems.itemname=itemname
+  }
+  if(itemprice){
+    checkitems.itemprice=itemprice
+  }
+  if(itemdiscount){
+    checkitems.itemdiscount=itemdiscount
+  }
+  if(itemdescription){
+    checkitems.itemdescription=itemdescription
+  }
+  if(itemcategory){
+    checkitems.itemcategory=itemcategory
+  }
+  const data=await checkitems.save()
+  if(data){
+    return res.status(200).json({message:"Successfully edited"})
+  }
+  else{
+    return res.status(422).json({error:"Not edited"})
+  }
+})
+
+router.post('/deleteitems/:id',async(req,res)=>{
+  const data=await User1.deleteOne({_id:req.params.id})
+  if(data){
+    return res.status(200).json({message:"Deleted"})
+  }
+  else{
+    return res.status(422).json({error:"Not deleted"})
   }
 })
 
@@ -539,6 +586,48 @@ router.post('/adminchangepassword',async(req,res)=>{
 
   }
 
+})
+
+router.post('/addtocart',async(req,res)=>{
+  const data=await Employee.findOne({email:req.body.email})
+  const data1=await User1.findOne({_id:req.body.itemid})
+  const data2=await Addtocart.findOne({itemid:req.body.itemid})
+  if(!data2){
+  const addtocart = new Addtocart({
+    _id: mongoose.Types.ObjectId(),
+    email:data.email,
+    itemid:data1._id,
+    itemname:data1.itemname,
+    itemcategory:data1.itemcategory,
+    itempicture:data1.itempicture
+  });
+  await addtocart.save()
+  if(addtocart){
+    return res.status(200).json({message:"Added"})
+  }
+  else{
+    return res.status(422).json({error:"Not added"})
+  }
+  }
+  else{
+    return res.status(422).json({error:"This item already added in you cart list"})
+    
+  }
+})
+
+router.get('/addtocartdetails',async(req,res)=>{
+  const data=await Addtocart.find()
+  res.send(data)
+})
+
+router.post('/deletecart/:id',async(req,res)=>{
+const data=await Addtocart.deleteOne({_id:req.params.id})
+if(data){
+  return res.status(200).json({message:"Deleted"})
+}
+else{
+  return res.status(422).json({error:"Not deleted"})
+}
 })
 
 

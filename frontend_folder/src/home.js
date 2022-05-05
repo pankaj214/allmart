@@ -12,41 +12,64 @@ import Footer from './footer';
 const Home = () => {
  
   const history = useHistory()
+  const [name,setName]  = useState('')
   const [itemdata,setItemdata] = useState([])
-  const handleBlog=async()=>{
-    const res=await fetch('http://localhost:5000/api/checkLogin',{
-      method:'GET',
-      headers:{
-  Accept:'application/json',
-  'Content-Type':'application/json'
+
+  const handleLogin=async()=>{
+  const res=await fetch('http://localhost:5000/api/checkLogin',{
+    method:'GET',
+    headers:{
+Accept:'application/json',
+'Content-Type':'application/json'
 },
-  })
-  const data=await res.json()
-  if(data.error==='Please be login'){
+})
+const data=await res.json()
+setName(data)
+}
+  const handleBlog=async(e,id)=>{
+    e.preventDefault()
+  if(name.error==='Please be login'){
       localStorage.setItem('decisions',0)
       history.push('/signin')
-      setTimeout(()=>{toast.error(`${data.error}`, {
+      setTimeout(()=>{toast.error(`${name.error}`, {
         position: "top-center",
       });},1000)
-     
     }
    else{
-     history.push('/addtocart')
+    const email = name.email
+    const itemid = id
+    const res = await fetch("http://localhost:5000/api/addtocart", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+       email,
+        itemid
+      }),
+    });
+
+    const data = await res.json();
+    if (data.message ==="Added") {
+      toast.success(`${data.message}`, {
+        position: "top-center",
+      });
+      setTimeout(() => {
+        history.push("/addtocart",{replace:true});
+      }, 1000);
+    } else {
+      toast.error(`${data.error}`, {
+        position: "top-center",
+      });
+    }
    }
   }
-  const handleBlog1=async()=>{
-    const res=await fetch('http://localhost:5000/api/checkLogin',{
-      method:'GET',
-      headers:{
-  Accept:'application/json',
-  'Content-Type':'application/json'
-},
-  })
-  const data=await res.json()
-  if(data.error==='Please be login'){
+  const handleBlog1=async(e)=>{
+    e.preventDefault()
+  if(name.error==='Please be login'){
       localStorage.setItem('decisions',0)
       history.push('/signin')
-      setTimeout(()=>{toast.error(`${data.error}`, {
+      setTimeout(()=>{toast.error(`${name.error}`, {
         position: "top-center",
       });},1000)
      
@@ -70,6 +93,7 @@ else{
   }
   useEffect(()=>{
         fetchItemData()
+        handleLogin()
   },[])
 
 return(
@@ -111,8 +135,8 @@ return(
 <h5 style={{textAlign:'center'}}>₹{item.itemprice}</h5>
 <h6 style={{textAlign:'center'}}>{item.itemdiscount}% discount</h6>
   <h4 style={{float:'left',marginTop:'4%',}}>  <span style={{textAlign:'center'}}>{item.itemdescription}</span> </h4> 
-  <Button style={{float:'right', marginTop:'10%',backgroundColor:'orange',}} onClick={handleBlog}>Add To Cart</Button>
-    <Button style={{marginTop:'10%',float:'left', backgroundColor:'#293659',}} onClick={handleBlog1}>View More</Button>
+  <Button style={{float:'right', marginTop:'10%',backgroundColor:'orange',}} onClick={(e)=>handleBlog(e,item._id)}>Add To Cart</Button>
+    <Button style={{marginTop:'10%',float:'left', backgroundColor:'#293659',}} onClick={(e)=>handleBlog1(e)}>View More</Button>
   </Card.Body>
 </Card>
 </div>

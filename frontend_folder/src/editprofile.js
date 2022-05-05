@@ -57,7 +57,7 @@ email:""
 const handleDelete=async(e)=>{
   e.preventDefault();
   const email=datas.email;
-  const ok=await window.confirm("Are you sure you want to delete this profile if you click Ok then can't withdraw delete profile request.")
+  const ok=await window.confirm("Are you sure you want to delete this profile if you click Ok then can't withdraw delete profile request ?")
   if(ok){
   const res = await fetch("http://localhost:5000/api/deleteprofile", {
     method: "POST",

@@ -94,7 +94,7 @@ const Adminchangepassword = () => {
     <Dropdown.Item href="/adminseeusers">See all users</Dropdown.Item>
     <Dropdown.Item href="/adminuserfeedback">See user feedback</Dropdown.Item>
     <Dropdown.Item href="/admineditprofile">Edit Profile</Dropdown.Item>
-    <Dropdown.Item href="/adminitemsdata">Admin Items Data</Dropdown.Item>
+    <Dropdown.Item href="/adminitemsdata">View products</Dropdown.Item>
     <Dropdown.Item href="/adminlogout">Logout</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>

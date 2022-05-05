@@ -125,7 +125,7 @@ const callModal=()=>{
     <Dropdown.Item href="/adminseeusers">See all users</Dropdown.Item>
     <Dropdown.Item href="/adminuserfeedback">See user feedback</Dropdown.Item>
     <Dropdown.Item href="/adminchangepassword">Change Password</Dropdown.Item>
-    <Dropdown.Item href="/adminitemsdata">View products Data</Dropdown.Item>
+    <Dropdown.Item href="/adminitemsdata">View products</Dropdown.Item>
     <Dropdown.Item href="/adminlogout">Logout</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
@@ -138,8 +138,13 @@ const callModal=()=>{
                
             <Container style={{backgroundColor:'white'}}>
   <Row>
+    <Col>
+    <marquee scrollAmount={10} style={{marginTop:'10%',fontWeight:'bolder',fontSize:'25px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px'}}>Price Discount will be decided on daily basis. </marquee>
+    <img src="https://gst-online.com/wp-content/uploads/2018/07/Discount-1.png" style={{marginLeft:'18%',width:'70%',height:'70%'}} />
+
+    </Col>
     <Col >
-        <h2>Create Product Cards:</h2>   
+        <h2>Create Products:</h2>   
         <div>
         <form className={classes.form} method="POST" encType="multipart/form-data">
         <TextField variant="outlined"

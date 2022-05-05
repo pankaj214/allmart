@@ -1,6 +1,6 @@
 import React, { useState,useEffect,Fragment } from "react";
 import {useHistory} from 'react-router-dom'
-import {Button,Col,Row,Container,Dropdown,Table} from 'react-bootstrap'
+import {Button,Col,Row,Container,Dropdown,Table,Modal} from 'react-bootstrap'
 import { ToastContainer, toast } from "react-toastify";
 import {TextField,makeStyles} from '@material-ui/core'
 import "react-toastify/dist/ReactToastify.css";
@@ -20,14 +20,24 @@ const Adminitemsdata = () => {
   const classes=useStyles()
   const history=useHistory()
   const [names,setNames]  = useState('')
-const [count,setCount] = useState(0)
+  const [viewproducts,setViewproducts] = useState([])
+  const [show, setShow] = useState(false);
+  const [viewproductss,setViewproductss] = useState([])
+  const [image,setImage] = useState('')
+
+  const handleClose = () => setShow(false);
+  const handleShow = (e,items) =>{
+    setShow(true)
+    setViewproductss(items)
+
+  }
   const [user, setUser] = useState({
-    iname: "",
-    iprice: "",
-    idiscount: "",
-    idescription: "",
-    icategory: "",
-    ipicture: ""
+    itemname: "",
+    itemprice: "",
+    itemdiscount: "",
+    itemdescription: "",
+    itemcategory: "",
+    itempicture: ""
   });
 
   let name, value;
@@ -36,28 +46,31 @@ const [count,setCount] = useState(0)
     value = e.target.value;
     setUser({ ...user, [name]: value });
   };
-
+  const handleImages=(e)=>{
+    setImage(e.target.files[0])
+}
   const handleClick = async (e) => {
     e.preventDefault();
-
-    const { iname,iprice,idiscount,idescription,icategory,ipicture } = user;
-    const res = await fetch("http://localhost:5000/api/adminitemdata", {
+      const itemid=viewproductss._id
+    const { itemname,itemprice,itemdiscount,itemdescription,itemcategory,itempicture } = user;
+    const res = await fetch("http://localhost:5000/api/adminedititemdata", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        iname,
-        iprice,
-        idiscount,
-        idescription,
-        icategory,
-        ipicture
+        itemid,
+        itemname,
+        itemprice,
+        itemdiscount,
+        itemdescription,
+        itemcategory,
+        itempicture
       }),
     });
 
     const data = await res.json();
-    if (data.message === "Uploaded") {
+    if (data.message === "Successfully edited") {
       toast.success(`${data.message}`, {
         position: "top-center",
       });
@@ -95,8 +108,55 @@ const [count,setCount] = useState(0)
 
 }
 
+const products=async()=>{
+  const res=await fetch('http://localhost:5000/api/home',{
+    method:'GET',
+    headers:{
+      Accept:'application/json',
+      'Content-Type':'application/json'
+    },
+    // credentials:'include'
+  })
+
+  const data=await res.json()
+  setViewproducts(data)
+
+}
+const handleDeleteitem=async(e,id)=>{
+  e.preventDefault()
+  const ok=await window.confirm("Are you sure you want to delete this item ?")
+  if(ok){
+    const res = await fetch(`http://localhost:5000/api/deleteitems/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+     
+    });
+  
+    const data = await res.json();
+    if (data.message === "Deleted") {
+      toast.success(`${data.message}`, {
+        position: "top-center",
+      });
+      setTimeout(() => {
+        history.push("/admindashboard",{replace:true});
+      }, 1000);
+    } else {
+      toast.error(`${data.error}`, {
+        position: "top-center",
+      });
+    }
+  
+  }
+  else{
+    return false
+  }
+}
+
   useEffect(()=>{
       callAdminitemsPage()
+      products()
   },[])
   
   
@@ -130,42 +190,145 @@ const [count,setCount] = useState(0)
             </div>
             </nav>
             <marquee scrollAmount={20} style={{fontWeight:'bolder',fontSize:'25px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px'}}>Welcome to Admin Panel</marquee>
-            <Container style={{marginTop:'2%',backgroundColor:'white'}}>
- <h2>View products Data</h2>
-            <Table>
-  <thead>
-    <tr>
-      <th>S.No.</th>
-      <th>Item Name</th>
-      <th>Item Price</th>
-      <th>Item Discount</th>
-      <th>Item Description</th>
-      <th>Item Category</th>
-      <th>Item Picture</th>
-      <th>Update Item</th>
-      <th>Delete</th>
+ <h2 style={{textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px'}}>View products</h2>
+ <Table striped bordered hover>
+<thead>
+<tr>
+  <th>S.No</th>
+  <th>Item name</th>
+  <th>Item discount</th>
+  <th>Item Price</th>
+  <th>Item description</th>
+  <th>Item category</th>
+  <th>Item picture</th>
+  <th colSpan={2}>Action</th>
+</tr>
+</thead>
+<tbody>
+{viewproducts.length>0 ? viewproducts.map((item,index)=>{
+  return(
+    <tr key={item._id}>
+      <td>{++index}</td>
+      <td>{item.itemname}</td>
+      <td>{item.itemdiscount}</td>
+      <td>{item.itemprice}</td>
+      <td>{item.itemdescription}</td>
+      <td>{item.itemcategory}</td>
+      <td><img src={item.itempicture} style={{marginLeft:'18%',width:'40%',height:'40%'}} /></td>
+      <td>{<button onClick={(e)=>handleShow(e,item)} style={{backgroundColor:"#05386B", color:'white'}}><i className="fa fa-edit" ></i>Edit</button>}</td>
+      <td>{<button onClick={(e)=>handleDeleteitem(e,item._id)} style={{backgroundColor:"#05386B", color:'white'}}><i className="fa fa-trash" ></i>Delete</button>}</td>
+
 
     </tr>
-  </thead>
-  <tbody>
-    <tr>
-    <td>{count+1}</td>
-      <td><input autoComplete="off" type="text" name="" /></td>
-      <td><input type="number" autoComplete="off" name="" /></td>
-      <td><input autoComplete="off" type="text" name="" /></td>
-      <td><input type="text" autoComplete="off" name="" /></td>
-      <td><input type="text" name="" autoComplete="off" /></td>
-      <td><image src=""/></td>
-      <td><input type="button" value="Edit" /></td>
-      <td><input type="button" value="Delete" /></td>
+)}):<tr><h2 style={{textAlign:'center'}}>No users yet</h2></tr>
 
-    </tr>
-   
-   
-  </tbody>
+}
+
+</tbody>
 </Table>
 
-</Container>
+<Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create Products</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+           <Row>
+    <Col >
+    <div>
+        <form className={classes.form} method="POST" >
+        <TextField variant="outlined"
+          margin="normal"
+          required
+          type="text"
+          fullWidth
+          id="itemname"
+          label="Item Name"
+          defaultValue={viewproductss.itemname}
+          onChange={handleInputs}
+          name="itemname"
+          autoComplete="off"
+          autoFocus/>
+        <TextField variant="outlined"
+          margin="normal"
+          required
+          type="number"
+          fullWidth
+          id="itemprice"
+          label="Item Price"
+          defaultValue={viewproductss.itemprice}
+          onChange={handleInputs}
+          name="itemprice"
+          autoComplete="off"
+          autoFocus/>
+        <TextField variant="outlined"
+          margin="normal"
+          required
+          type="text"
+          fullWidth
+          id="itemdiscount"
+          label="Item Discount"
+          defaultValue={viewproductss.itemdiscount}
+          onChange={handleInputs}
+          name="itemdiscount"
+          autoComplete="off"
+          autoFocus/>
+ <TextField variant="outlined"
+          margin="normal"
+          required
+          type="text"
+          fullWidth
+          id="itemdescription"
+          label="Item Description"
+          defaultValue={viewproductss.itemdescription}
+          onChange={handleInputs}
+          name="itemdescription"
+          autoComplete="off"
+          autoFocus/>
+          <TextField variant="outlined"
+          margin="normal"
+          required
+          type="text"
+          fullWidth
+          id="itemcategory"
+          label="Item Category"
+          defaultValue={viewproductss.itemcategory}
+          onChange={handleInputs}
+          name="itemcategory"
+          autoComplete="off"
+          autoFocus/>
+             <TextField variant="outlined"
+          margin="normal"
+          type="file"
+          fullWidth
+          id="itempicture"
+          label="Item Picture"
+          onChange={handleImages}
+          name="itempicture"
+          autoComplete="off"
+          autoFocus/>
+            <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          style={{ backgroundColor: "#05386B", color: "white" }}
+          className={classes.submit}
+          onClick={handleClick}
+        >
+          Update
+        </Button>
+        </form>      
+        <br/>
+        </div>       
+    </Col>
+  
+  </Row>
+  </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
                <br/><br/>
                
                 <footer className="site-footer">

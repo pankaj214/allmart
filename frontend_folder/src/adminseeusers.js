@@ -49,7 +49,7 @@ const Adminseeusers = () => {
     const handleProfiledeleted=async(e,deleteprofilestatus,id,username)=>{
         e.preventDefault()
       if(deleteprofilestatus=="wants to delete"){
-        const ok=await window.confirm(`${username} wants to delete now,you will delete this profile`)
+        const ok=await window.confirm(`${username} wants to delete now,you will delete this profile.`)
         if(ok){
         const res=await fetch(`http://localhost:5000/api/deletedprofile/${id}`,{
           method:'POST',
@@ -106,7 +106,7 @@ const Adminseeusers = () => {
   <Dropdown.Menu>
   <img src={names.adminimage} alt="Profile" style={{width:'30%',height:'30%',marginLeft:'30%',borderRadius:'50%'}}/>
   <Dropdown.Item href="/admineditprofile">Edit Profile</Dropdown.Item>
-    <Dropdown.Item href="/adminitemsdata">View products Data</Dropdown.Item>
+    <Dropdown.Item href="/adminitemsdata">View products</Dropdown.Item>
     <Dropdown.Item href="/adminuserfeedback">See user feedback</Dropdown.Item>
     <Dropdown.Item href="/adminchangepassword">Change Password</Dropdown.Item>
   <Dropdown.Item href="/admindashboard">Go to dashboard</Dropdown.Item>
@@ -151,7 +151,7 @@ const Adminseeusers = () => {
       <td>{item.dateofbirth}</td>
       <td>{item.addressfororders}</td>
       <td>{item.deleteprofilestatus}</td>
-      <td>{<button onClick={(e)=>handleProfiledeleted(e,item.deleteprofilestatus,item._id,item.username)} style={{backgroundColor:"#05386B", color:'white'}}>Delete Profile</button>}</td>
+      <td>{<button onClick={(e)=>handleProfiledeleted(e,item.deleteprofilestatus,item._id,item.username)} style={{backgroundColor:"#05386B", color:'white'}}><i className="fa fa-trash" ></i>Delete Profile</button>}</td>
 
     </tr>
 )}):<tr><h2 style={{textAlign:'center'}}>No users yet</h2></tr>
