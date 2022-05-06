@@ -73,7 +73,11 @@ const Addtocart = () => {
 
     }
     const handleView=(e,itemid)=>{
-        console.log(itemid)
+      e.preventDefault()
+           history.push({
+             pathname:'/viewmoreitem',
+             state:itemid
+           })
     }
      useEffect(()=>{
  callAddtocart()
@@ -115,7 +119,7 @@ const Addtocart = () => {
       <td><img src={item.itempicture} style={{marginLeft:'18%',width:'30%',height:'30%'}} /></td>
       <td>{item.itemcategory}</td>
       <td>{<button onClick={(e)=>handleView(e,item.itemid)} style={{backgroundColor:"#05386B", color:'white'}}><i className="fa fa-eye" ></i>View</button>}</td>
-      <td>{<button onClick={(e)=>handleCartdeleted(e,item._id)} style={{backgroundColor:"#05386B", color:'white'}}><i className="fa fa-trash" ></i>Delete to cart</button>}</td>
+      <td>{<button onClick={(e)=>handleCartdeleted(e,item._id)} style={{backgroundColor:"#05386B", color:'white'}}><i className="fa fa-trash" ></i>Delete from cart</button>}</td>
 
     </tr>
 )}):<tr><h2 style={{textAlign:'center'}}>No products yet</h2></tr>

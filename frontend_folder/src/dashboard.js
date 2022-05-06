@@ -116,9 +116,12 @@ setItemdata(data)
     }
    
   }
-  const handleBlog1=async()=>{
-  
-  history.push('/viewmoreitem')
+  const handleBlog1=(e,itemid)=>{
+    e.preventDefault()
+           history.push({
+             pathname:'/viewmoreitem',
+             state:itemid
+           })
   }
 
   localStorage.setItem('userimage',name.userimage)
@@ -400,7 +403,7 @@ setItemdata(data)
 <h6 style={{textAlign:'center'}}>{item.itemdiscount}% discount</h6>
   <h4 style={{float:'left',marginTop:'4%',}}>  <span style={{textAlign:'center'}}>{item.itemdescription}</span> </h4> 
   <Button style={{float:'right', marginTop:'10%',backgroundColor:'orange',}} onClick={(e)=>handleBlog(e,item._id)}>Add To Cart</Button>
-    <Button style={{marginTop:'10%',float:'left', backgroundColor:'#293659',}} onClick={handleBlog1}>View More</Button>
+    <Button style={{marginTop:'10%',float:'left', backgroundColor:'#293659',}} onClick={(e)=>handleBlog1(e,item._id)}>View More</Button>
   </Card.Body>
 </Card>
 </div>

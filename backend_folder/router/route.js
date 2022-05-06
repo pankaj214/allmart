@@ -231,6 +231,11 @@ router.get('/home',async(req,res)=>{
 
 })
 
+router.post('/callhome/:id',async(req,res)=>{
+  const data=await User1.findOne({_id:req.params.id})
+  return res.send(data)
+})
+
 router.get('/recommendhome',async(req,res)=>{
   const itemdata1=await User1.find().sort({itemname:-1}).limit(2)
   res.send(itemdata1)
