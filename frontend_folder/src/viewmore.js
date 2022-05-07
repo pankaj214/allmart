@@ -68,9 +68,7 @@ callItemdata()
     backgroundColor: '#f2f2f2',color:'black',
     padding: '20px'}}>
     <Row>
-      <Col>
       
-      </Col>
         <Col lg={7} sm={6}>
         <img src={itemdata.itempicture} className="img-fluid"style={{border:"2px solid black"}} width="500" height="600" />
         </Col>
@@ -79,7 +77,7 @@ callItemdata()
         <h5>Category: {itemdata.itemcategory}</h5>
   <Rating value={3} max={5} onChange={(value) => console.log(`Rated with value ${value}`)}
 />
-        <h4>M.R.P.: <strike style={{color:'red'}}>{itemdata.itemprice}</strike></h4>
+        <h4>M.R.P.: <strike style={{color:'red'}}>₹{itemdata.itemprice}</strike></h4>
         <h5>Discount: {itemdata.itemdiscount}%</h5>
         <h4>Deal Price: <span style={{color:'green'}}>₹{dealprice}</span></h4>
         <h4>You save: <span style={{color:'green'}}>₹{yousave}</span></h4>

@@ -94,6 +94,18 @@ else{
   const data=await res.json()
   setItemdata(data)
   }
+
+const handleSearch = async(e) => {
+    const key=e.target.value
+    if(key){
+        const res=await fetch(`http://localhost:5000/api/searchitems/${key}`)
+        const data=await res.json()
+        setItemdata(data)
+}
+else{
+  fetchItemData()
+}};
+
   useEffect(()=>{
         fetchItemData()
         handleLogin()
@@ -110,7 +122,7 @@ return(
 
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/2560px-Flag_of_India.svg.png" alt="Indian Flag" style={{width:'5%',height:'5%',marginLeft:'5%'}}/>
 
-  <SearchIcon style={{marginLeft:'15%'}}/><Input style={{width:'50%',marginTop:'2%'}} placeholder='Search By Item Name' type='search'/>
+  <SearchIcon style={{marginLeft:'15%'}}/><Input onChange={handleSearch} style={{width:'50%',marginTop:'2%'}} placeholder='Search By Item Name or Item Category' type='search'/>
   
   {localStorage.getItem('userimage') ? <img src={localStorage.getItem('userimage')} alt="Profile" style={{width:'5%',height:'5%',float:'right',marginRight:'5%',borderRadius:'50%'}}/> : <p style={{marginRight:'5%',visibility:'hidden',float:'right'}}>Allmart</p>}
 
@@ -121,7 +133,7 @@ return(
 <marquee style={{fontSize:20,fontWeight:'bold'}}>**Grab it**</marquee>
 
 <Grid container style={{marginTop:'-4%'}}>
-    {itemdata.map((item,index)=>{
+    {itemdata.length>0 ? itemdata.map((item,index)=>{
       return(
         <Grid item xs={12} sm={6} md={4} key={item._id}>
         <div > 
@@ -145,7 +157,7 @@ return(
 </div>
 </Grid>
       )
-    })}
+    }):<h1 style={{backgroundColor:'white',marginLeft:'36%',marginTop:'10%',fontWeight:'bold',marginBottom:'16%'}}>No products found</h1>}
 </Grid>
 
 <h5 style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>Frequently asked questions:(FAQ)</h5>

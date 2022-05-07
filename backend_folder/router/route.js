@@ -635,6 +635,17 @@ else{
 }
 })
 
+router.get('/searchitems/:value',async(req,res)=>{
+  const r=new RegExp(req.params.value,'i')
+  const data=await User1.find({
+    "$or":[
+      {"itemname":r},
+      {"itemcategory":r}
+    ]}
+    )
+  return res.send(data)
+})
+
 
 
 
