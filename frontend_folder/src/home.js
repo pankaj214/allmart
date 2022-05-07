@@ -55,7 +55,10 @@ setName(data)
         position: "top-center",
       });
       setTimeout(() => {
-        history.push("/addtocart",{replace:true});
+        history.push({
+          pathname:'/addtocart',
+        state:email
+      });
       }, 1000);
     } else {
       toast.error(`${data.error}`, {
@@ -75,6 +78,7 @@ setName(data)
      
     }
 else{
+  localStorage.setItem('email',name.email)
            history.push({
            pathname:'/viewmoreitem',
            state:itemid

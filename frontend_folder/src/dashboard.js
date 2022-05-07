@@ -1,5 +1,5 @@
 import React, { useState,useEffect,Fragment } from "react";
-import {useHistory} from 'react-router-dom'
+import {useHistory,Link} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Appbar from "./appbar";
@@ -107,7 +107,10 @@ setItemdata(data)
         position: "top-center",
       });
       setTimeout(() => {
-        history.push("/addtocart",{replace:true});
+        history.push({
+          pathname:'/addtocart',
+        state:email
+      })
       }, 1000);
     } else {
       toast.error(`${data.error}`, {
@@ -118,6 +121,7 @@ setItemdata(data)
   }
   const handleBlog1=(e,itemid)=>{
     e.preventDefault()
+    localStorage.setItem('email',name.email)
            history.push({
              pathname:'/viewmoreitem',
              state:itemid
@@ -136,10 +140,15 @@ setItemdata(data)
 
   <Dropdown.Menu>
   <img src={name.userimage} alt="Profile" style={{width:'30%',height:'30%',marginLeft:'30%',borderRadius:'50%'}}/>
-    <Dropdown.Item href="/user_profile">Edit Profile</Dropdown.Item>
-    <Dropdown.Item href="/change_password">Change Password</Dropdown.Item>
+    <Dropdown.Item href="/user_profile">Edit profile</Dropdown.Item>
+    <Dropdown.Item href="/change_password">Change password</Dropdown.Item>
     <Dropdown.Item href="/view_history">Transactions</Dropdown.Item>
-    <Dropdown.Item href="/addtocart">Cart Products</Dropdown.Item>
+    <Dropdown.Item ><Link
+  to={{
+    pathname: "/addtocart",
+    state: name.email
+  }}
+>Cart products</Link></Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
        

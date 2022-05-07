@@ -5,10 +5,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./footer";
 import {Table,Container,Row,Button} from 'react-bootstrap'
-const Addtocart = () => {
+const Addtocart = (props) => {
 
   const history=useHistory()
   const [seecart,setSeecart] = useState([])
+  const [emails,setEmails]  = useState('')
   const callAddtocart=async()=>{
     const res=await fetch('http://localhost:5000/api/checkLogin',{
        method:'GET',
@@ -18,6 +19,7 @@ const Addtocart = () => {
  },
    })
    const data=await res.json()
+   setEmails(data)
    if(data.error==='Please be login'){
        localStorage.setItem('decisions',0)
        history.push('/signin')
@@ -28,7 +30,8 @@ const Addtocart = () => {
      } }
 
      const fetchItemData=async()=>{
-      const res=await fetch('http://localhost:5000/api/addtocartdetails',{
+     const email=props.location.state  
+      const res=await fetch(`http://localhost:5000/api/addtocartdetails/${email}`,{
         method:'GET',
         headers:{
     Accept:'application/json',
@@ -74,6 +77,7 @@ const Addtocart = () => {
     }
     const handleView=(e,itemid)=>{
       e.preventDefault()
+      localStorage.setItem('email',emails.email)
            history.push({
              pathname:'/viewmoreitem',
              state:itemid

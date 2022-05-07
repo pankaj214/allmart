@@ -15,6 +15,7 @@ const Employee = require("../models/model");
 const User1=require('../models/model1')
 const User2=require('../models/modeladmin')
 const Addtocart=require('../models/model2')
+const Rating=require('../models/modelRating')
 const crypto=require('crypto');
 const upload=require('../middleware/imagemulter')
 const imagevalidation=require('../middleware/imagevalidation')
@@ -492,7 +493,10 @@ router.post('/deletedprofile/:id',async(req,res)=>{
   })
 
   const deleteProfile=await Employee.deleteOne({_id:req.params.id})
-  if(deleteProfile){
+  const deleteRating=await Rating.deleteMany({email:data.email})
+  const deleteCarts=await Addtocart.deleteMany({email:data.email})
+
+  if(deleteProfile && deleteRating && deleteCarts){
     return res.status(200).json({message:"Profile deleted and mail sent to user."})
   }
   else{
@@ -596,7 +600,7 @@ router.post('/adminchangepassword',async(req,res)=>{
 router.post('/addtocart',async(req,res)=>{
   const data=await Employee.findOne({email:req.body.email})
   const data1=await User1.findOne({_id:req.body.itemid})
-  const data2=await Addtocart.findOne({itemid:req.body.itemid})
+  const data2=await Addtocart.findOne({itemid:req.body.itemid,email:req.body.email})
   if(!data2){
   const addtocart = new Addtocart({
     _id: mongoose.Types.ObjectId(),
@@ -620,9 +624,11 @@ router.post('/addtocart',async(req,res)=>{
   }
 })
 
-router.get('/addtocartdetails',async(req,res)=>{
-  const data=await Addtocart.find()
-  res.send(data)
+router.get('/addtocartdetails/:email',async(req,res)=>{
+  const data=await Addtocart.find({email:req.params.email})
+  if(data){
+       return res.send(data)
+}
 })
 
 router.post('/deletecart/:id',async(req,res)=>{
@@ -644,6 +650,37 @@ router.get('/searchitems/:value',async(req,res)=>{
     ]}
     )
   return res.send(data)
+})
+
+router.get('/ratings/:value/:itemid/:email',async(req,res)=>{
+  const a=await Rating.findOne({email:req.params.email,itemid:req.params.itemid})
+  if(a){
+    a.ratingvalue=req.params.value
+    await a.save()
+    return res.status(200).json({message:"Rating updated"})
+  }  
+  else{
+  const createRating=new Rating({
+    _id: mongoose.Types.ObjectId(),
+    email:req.params.email,
+    itemid:req.params.itemid,
+    ratingvalue:req.params.value
+  })
+  await createRating.save()
+  if(createRating){
+    return res.status(200).json({message:"Successfully rated"})
+  }
+  else{
+    return res.status(422).json({error:"Not rated"})
+  }
+  }
+})
+
+router.get('/viewratings/:itemid/:email',async(req,res)=>{
+  const data=await Rating.findOne({email:req.params.email,itemid:req.params.itemid})
+  if(data){
+    return res.send(data)
+  }
 })
 
 

@@ -5,7 +5,6 @@ import Footer from './footer';
 import {useHistory} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Rating from 'material-ui-rating';
 const Thankyou = () => {
     const history=useHistory()
 
@@ -47,7 +46,7 @@ const Thankyou = () => {
         <br/>
         <form action='' method=''>
             <textarea className="suggestion" placeholder="Any suggestion?" style={{width:"100%",height:"20vh"}}></textarea>
-            <input type='submit' value="Save"/>
+            <input type='submit' value="Submit your feedback"/>
         </form>
       
         <hr/>

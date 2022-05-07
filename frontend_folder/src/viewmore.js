@@ -12,6 +12,8 @@ const Viewmore=(props)=>{
  const [itemdata,setItemdata] = useState([])
  const [yousave,setYousave] = useState('')
  const [dealprice,setDealprice] = useState('')
+ const [ratings,setRatings] = useState(0)
+ const [emails,setEmails] = useState('')
  const callViewmore=async()=>{
    const res=await fetch('http://localhost:5000/api/checkLogin',{
       method:'GET',
@@ -21,6 +23,7 @@ const Viewmore=(props)=>{
 },
   })
   const data=await res.json()
+  setEmails(data)
   if(data.error==='Please be login'){
       localStorage.setItem('decisions',0)
       history.push('/signin')
@@ -45,10 +48,42 @@ const Viewmore=(props)=>{
         setDealprice(value1)
         setItemdata(data)
       }
+
+      const handleRating=async(value)=>{
+              const res=await fetch(`http://localhost:5000/api/ratings/${value}/${itemdata._id}/${emails.email}`)
+
+              const data=await res.json()
+              if(data.message==='Successfully rated'){
+                setTimeout(()=>{toast.success(`${data.message}`, {
+                  position: "top-center",
+                });},1000)
+               
+              }
+              else if(data.message==='Rating updated'){
+                setTimeout(()=>{toast.success(`${data.message}`, {
+                  position: "top-center",
+                });},1000)
+               
+              }
+              else{
+                setTimeout(()=>{toast.error(`${data.error}`, {
+                  position: "top-center",
+                });},1000)
+               
+              }
+      }
+
+      const callRating=async()=>{
+        const itemid=props.location.state
+        const res=await fetch(`http://localhost:5000/api/viewratings/${itemid}/${localStorage.getItem('email')}`)
+        const data=await res.json()
+        setRatings(data.ratingvalue)
+      }
      
     useEffect(()=>{
 callViewmore()
 callItemdata()
+callRating()
     },[])
   
     return(
@@ -75,8 +110,10 @@ callItemdata()
         <Col style={{float:"right"}} lg={4} sm={6}>
         <h3>{itemdata.itemname}</h3>
         <h5>Category: {itemdata.itemcategory}</h5>
-  <Rating value={3} max={5} onChange={(value) => console.log(`Rated with value ${value}`)}
-/>
+
+  <Rating value={ratings} max={5} onChange={(value)=>handleRating(value)}
+/><h4 style={{fontWeight:'bold',color:'#ffcc00'}}>{ratings>0 ?  `You have rated: ${ratings}`:`No rating`}</h4>
+
         <h4>M.R.P.: <strike style={{color:'red'}}>₹{itemdata.itemprice}</strike></h4>
         <h5>Discount: {itemdata.itemdiscount}%</h5>
         <h4>Deal Price: <span style={{color:'green'}}>₹{dealprice}</span></h4>
