@@ -25,7 +25,7 @@ const transporter=nodeMailer.createTransport(sendgridTransport({
     api_key:process.env.API
   }
 }))
-var instance = new Razorpay({ key_id: 'rzp_test_dyDeRIriUuDmPY', key_secret: 'MhQVtUmJMeiTXnlkEE3WHjea'})
+var instance = new Razorpay({ key_id: '', key_secret: ''})
 
 
 
