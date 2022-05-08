@@ -16,14 +16,17 @@ const User1=require('../models/model1')
 const User2=require('../models/modeladmin')
 const Addtocart=require('../models/model2')
 const Rating=require('../models/modelRating')
+const Transaction=require('../models/modelTransaction')
 const crypto=require('crypto');
-const upload=require('../middleware/imagemulter')
-const imagevalidation=require('../middleware/imagevalidation')
+const Razorpay=require('razorpay')
+const uniqId=require('uniqid')
 const transporter=nodeMailer.createTransport(sendgridTransport({
   auth:{
     api_key:process.env.API
   }
 }))
+var instance = new Razorpay({ key_id: 'rzp_test_dyDeRIriUuDmPY', key_secret: 'MhQVtUmJMeiTXnlkEE3WHjea'})
+
 
 
 router.post("/register", async (req, res) => {
@@ -495,8 +498,8 @@ router.post('/deletedprofile/:id',async(req,res)=>{
   const deleteProfile=await Employee.deleteOne({_id:req.params.id})
   const deleteRating=await Rating.deleteMany({email:data.email})
   const deleteCarts=await Addtocart.deleteMany({email:data.email})
-
-  if(deleteProfile && deleteRating && deleteCarts){
+  const deleteTransactions=await Transaction.deleteMany({email:data.email})
+  if(deleteProfile && deleteRating && deleteCarts && deleteTransactions){
     return res.status(200).json({message:"Profile deleted and mail sent to user."})
   }
   else{
@@ -683,8 +686,65 @@ router.get('/viewratings/:itemid/:email',async(req,res)=>{
   }
 })
 
+router.get('/createorder/:price',(req,res)=>{
+  var options={
+    amount: req.params.price*100,
+    currency: "INR",
+    receipt: uniqId()
+  }
 
+  instance.orders.create(options,(err,order)=>{
+          if(err){
+            return res.status(500).json({
+              error:err
+            })
+          }
+          res.json(order)
+})
+})
 
+router.post('/payment/success/:itemid/:dealprice/:email/:itemname/:orderid',async(req,res)=>{
+const transaction=new Transaction({
+  _id: mongoose.Types.ObjectId(),
+  email:req.params.email,
+  itemid:req.params.itemid,
+  itemname:req.params.itemname,
+  itemprice:req.params.dealprice,
+  payment_id:req.body.razorpay_payment_id,
+  order_id:req.params.orderid,
+  payment_status:'success'
 
+})
 
+await transaction.save()
+if(transaction){
+  transporter.sendMail({
+    to:req.params.email,
+    from:process.env.EMAIL,
+    subject:"Thanks for purchasing",
+    html:`
+    <div style="border-style:solid; margin:5%; color:#05386B; text-align:center;">
+    <h2 style="text-decoration:underline;">ALLMART</h2>
+          <h3>Your payment for purchasing the item: ${req.params.itemname} have successfully received.If,you want to see your payment details then go to your profile.</h3>
+         </div> 
+    `
+  })
+  res.redirect('http://localhost:3000/thankyou_success')
+}
+else{
+  res.redirect('http://localhost:3000/paymentpending')
+}
+})
+
+router.get('/viewtransactions/:email',async(req,res)=>{
+  const data=await Transaction.find({email:req.params.email})
+  if(data){
+  return res.send(data)
+  }
+})
+router.get('/seetransactions',async(req,res)=>{
+  const data=await Transaction.find()
+  return res.send(data)
+  
+})
 module.exports = router;

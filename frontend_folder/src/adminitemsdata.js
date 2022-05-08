@@ -178,6 +178,7 @@ const handleDeleteitem=async(e,id)=>{
   <img src={names.adminimage} alt="Profile" style={{width:'30%',height:'30%',marginLeft:'30%',borderRadius:'50%'}}/>
   <Dropdown.Item href="/admineditprofile">Edit Profile</Dropdown.Item>
     <Dropdown.Item href="/adminseeusers">See all users</Dropdown.Item>
+    <Dropdown.Item href="/adminseeusertransactions">See user transactions</Dropdown.Item>
     <Dropdown.Item href="/adminuserfeedback">See user feedback</Dropdown.Item>
     <Dropdown.Item href="/adminchangepassword">Change Password</Dropdown.Item>
   <Dropdown.Item href="/admindashboard">Go to dashboard</Dropdown.Item>

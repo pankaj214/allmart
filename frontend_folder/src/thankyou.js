@@ -42,14 +42,9 @@ const Thankyou = () => {
             <Container className="thankback text-center">
     <Row>
         <div style={{paddingLeft:'30%'}}>
-        <marquee className="text-center" style={{color:'black',fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>!!Thanks for purchasing!!</marquee>
+        <marquee className="text-center" style={{color:'green',fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>!!PAYMENT SUCCESS!!</marquee>
         <br/>
-        <form action='' method=''>
-            <textarea className="suggestion" placeholder="Any suggestion?" style={{width:"100%",height:"20vh"}}></textarea>
-            <input type='submit' value="Submit your feedback"/>
-        </form>
       
-        <hr/>
         <h4 className='text-center'>
             Having trouble? <a href="/contact" style={{textDecoration:"underline",color:"blue"}}>Contact us</a>
         </h4>

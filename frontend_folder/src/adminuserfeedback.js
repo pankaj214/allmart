@@ -132,6 +132,7 @@ const Adminuserfeedback = () => {
   <Dropdown.Item href="/admineditprofile">Edit Profile</Dropdown.Item>
     <Dropdown.Item href="/adminitemsdata">View products</Dropdown.Item>
     <Dropdown.Item href="/adminseeusers">See all users</Dropdown.Item>
+    <Dropdown.Item href="/adminseeusertransactions">See user transactions</Dropdown.Item>
     <Dropdown.Item href="/adminchangepassword">Change Password</Dropdown.Item>
   <Dropdown.Item href="/admindashboard">Go to dashboard</Dropdown.Item>
     <Dropdown.Item href="/adminlogout">Logout</Dropdown.Item>

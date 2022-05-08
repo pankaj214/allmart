@@ -27,6 +27,8 @@ import Admineditprofile from "./admineditprofile"
 import Adminchangepassword from "./adminchangepassword"
 import Adminseeusers from "./adminseeusers"
 import Adminuserfeedback from "./adminuserfeedback";
+import Adminseeusertransactions from "./adminseeusertransactions"
+import Paymentnotdone from './paymentnotdone'
 export const UserContext=createContext()
 
 const Routing =()=>{
@@ -73,6 +75,8 @@ const Routing =()=>{
           <Route exact path="/adminchangepassword" component={Adminchangepassword} />
        <Route exact path="/adminseeusers" component={Adminseeusers} />
        <Route exact path="/adminuserfeedback" component={Adminuserfeedback} />
+       <Route exact path="/adminseeusertransactions" component={Adminseeusertransactions} />
+       <Route exact path="/paymentpending" component={Paymentnotdone} />
         <Route component={Error} />
       </Switch>
     </BrowserRouter>

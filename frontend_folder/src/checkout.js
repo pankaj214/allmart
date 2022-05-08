@@ -1,13 +1,16 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { ToastContainer, toast } from "react-toastify";
-import Appbar from './appbar'
 import {useHistory} from 'react-router-dom'
 import "react-toastify/dist/ReactToastify.css";
-import Footer from './footer'
-import './checkout.css'
-import {Container,Row} from 'react-bootstrap'
-const Checkout = () => {
+const Checkout = (props) => {
   const history=useHistory()
+  const [values,setValues]  = useState({
+    amount:0,
+    orderId:'',
+    error:'',
+    success:false
+  })
+  const {amount,orderId,error,success}  = values
 
   const callCheckout=async()=>{
     const res=await fetch('http://localhost:5000/api/checkLogin',{
@@ -26,9 +29,55 @@ const Checkout = () => {
        });},1000)
       
      } }
-     useEffect(()=>{
- callCheckout()
-     },[])
+useEffect(()=>{
+   callCheckout()
+   getOrders()
+       },[])
+     const getOrders=async()=>{
+       const res=await fetch(`http://localhost:5000/api/createorder/${props.location.state[1]}`,{
+         method:'GET'
+       })
+       const data=await res.json()
+        if(data.error){
+          setValues({...values,error:data.error,success:false})
+        }
+        else{
+          setValues({...values,error:'',success:true,orderId:data.id,amount:data.amount})
+        }
+      }
+
+      useEffect(()=>{
+          if(amount>0 && orderId!==''){
+                showRazorPay()
+          }
+      },[amount])
+
+     const showRazorPay=()=>{
+       const form=document.createElement('form')
+       form.setAttribute('action',`http://localhost:5000/api/payment/success/${props.location.state[0]}/${props.location.state[1]}/${props.location.state[2]}/${props.location.state[5]}/${orderId}`)
+       form.setAttribute('method','post')
+       const script = document.createElement('script')
+       script.src="https://checkout.razorpay.com/v1/checkout.js"
+       script.setAttribute('data-key','rzp_test_dyDeRIriUuDmPY')
+       script.setAttribute('data-amount',amount)
+       script.setAttribute('data-name','ALLMART')
+       script.setAttribute('data-description','Thanks for purchasing')
+       script.setAttribute('data-currency','INR')
+       script.setAttribute('data-prefill.contact',props.location.state[3])
+       script.setAttribute('data-prefill.email',props.location.state[2])
+       script.setAttribute('data-order-id',orderId)
+       script.setAttribute('data-prefill.name',props.location.state[4])
+       script.setAttribute('data-image','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1kDyk4t1MZOnnXUT24zNSuVBtmeA0MPzUOg&usqp=CAU')
+       script.setAttribute('data-buttontext',"Buy now")
+       document.body.appendChild(form)
+       form.appendChild(script)
+       const input= document.createElement('input')
+       input.type="hidden"
+       input.custom="Hidden Element"
+       input.name="hidden"
+       form.appendChild(input)
+     }
+   
 
     return (
         <>
@@ -40,78 +89,8 @@ const Checkout = () => {
             </div>
             </nav>
             <br/>
-            <Container >
-  <Row className="justify-content-md-center">
-   <span style={{fontWeight:'bolder',fontSize:'30px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px',fontFamily:'sans-serif',marginTop:'1%'}}>PAYMENT DETAILS</span>
-  </Row>
-  </Container>
-  <br/>
-  <div className="row">
-  <div className="col-75">
-    <div className="containers">
-      <form action="">
-      
-        <div className="row">
-          <div className="col-50">
-            <h3>Billing Address</h3>
-            <label for="fname"><i className="fa fa-user"></i> Full Name</label>
-            <input type="text" id="fname" name="firstname" placeholder="John M. Doe"/>
-            <label for="email"><i className="fa fa-envelope"></i> Email</label>
-            <input type="text" id="email" name="email" placeholder="john@example.com"/>
-            <label for="adr"><i className="fa fa-address-card-o"></i> Address</label>
-            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street"/>
-            <label for="city"><i className="fa fa-institution"></i> City</label>
-            <input type="text" id="city" name="city" placeholder="New York"/>
+            <marquee scrollAmount={35} style={{fontWeight:'bolder',fontSize:'25px',textDecoration:'underline',textDecorationColor:'#EEB127',textAlign:'center',textDecorationThickness:'8px'}}>Welcome to ALLMART payment gateway</marquee>
 
-            <div className="row">
-              <div className="col-50">
-                <label for="state">State</label>
-                <input type="text" id="state" name="state" placeholder="NY"/>
-              </div>
-              <div className="col-50">
-                <label for="zip">Zip</label>
-                <input type="text" id="zip" name="zip" placeholder="10001"/>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-50">
-            <h3>Payment</h3>
-            <label for="fname">Accepted Cards</label>
-            <div className="icon-container">
-              <i className="fa fa-cc-visa" style={{color:'navy'}}></i>
-              <i className="fa fa-cc-amex" style={{color:'blue'}}></i>
-              <i className="fa fa-cc-mastercard" style={{color:'red'}}></i>
-              <i className="fa fa-cc-discover" style={{color:'orange'}}></i>
-            </div>
-            <label for="cname">Name on Card</label>
-            <input type="text" id="cname" name="cardname" placeholder="John More Doe"/>
-            <label for="ccnum">Credit card number</label>
-            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444"/>
-            <label for="expmonth">Exp Month</label>
-            <input type="text" id="expmonth" name="expmonth" placeholder="September"/>
-            <div className="row">
-              <div className="col-50">
-                <label for="expyear">Exp Year</label>
-                <input type="text" id="expyear" name="expyear" placeholder="2018"/>
-              </div>
-              <div className="col-50">
-                <label for="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" placeholder="352"/>
-              </div>
-            </div>
-          </div>
-          
-        </div>
-        
-        <input type="submit" value="Continue to checkout" className="btn"/>
-      </form>
-    </div>
-  </div>
- 
-  </div>
-  <br/>
-            <Footer/>
             <ToastContainer/>
         </>
     )

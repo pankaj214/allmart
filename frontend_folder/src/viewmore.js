@@ -3,9 +3,12 @@ import Appbar from "./appbar";
 import {useHistory} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Row,Col,Button,Container } from "react-bootstrap";
+import { Row,Col,Button,Container,Card } from "react-bootstrap";
 import Footer from './footer';
+import npci from './images/npci.jpg';
+import razorpay from './images/razorpay.jpg';
 import Rating from 'material-ui-rating'
+import {Grid} from '@material-ui/core'
 const Viewmore=(props)=>{
 
  const history=useHistory()
@@ -79,6 +82,14 @@ const Viewmore=(props)=>{
         const data=await res.json()
         setRatings(data.ratingvalue)
       }
+      const handlecallPurchase=(e,dealprice,itemid,itemname)=>{
+        e.preventDefault()
+        const array=[itemid,dealprice,emails.email,emails.phone,emails.username,itemname]
+        history.push({
+          pathname:'/checkout',
+          state:array
+        })
+      }
      
     useEffect(()=>{
 callViewmore()
@@ -98,6 +109,21 @@ callRating()
             </nav>
         <br/>
         <marquee scrollAmount={30} style={{opcaity:0.6,fontSize:20,fontWeight:'bold'}}>**You have select and purchase only one product at a time of the allmart.**</marquee>
+
+        <Grid container>
+  <Grid item xs={12} sm={6} md={6}>
+  <Card style={{width:'55%'}} >
+  <Card.Img variant="top" style={{height:'10vh'}} src={npci} alt="NPCI"/>
+  </Card>
+  </Grid>
+
+  <Grid item xs={12} sm={6} md={6}>
+  <Card style={{width:'55%'}} >
+  <Card.Img variant="top" style={{height:'10vh'}} src={razorpay} alt="RAZORPAY"/>
+ 
+</Card>
+  </Grid>
+</Grid>
 
         <Container style={{borderRadius: '5px',
     backgroundColor: '#f2f2f2',color:'black',
@@ -119,7 +145,7 @@ callRating()
         <h4>Deal Price: <span style={{color:'green'}}>₹{dealprice}</span></h4>
         <h4>You save: <span style={{color:'green'}}>₹{yousave}</span></h4>
         <h5>(Inclusive of all taxes)</h5>
-        <Button href="/checkout" style={{color:"white", margin: "5%", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)",backgroundColor:'#05386B'}}><h4>Buy</h4></Button><strong>(in stock)</strong>
+        <Button onClick={(e)=>handlecallPurchase(e,dealprice,itemdata._id,itemdata.itemname)} style={{color:"white", margin: "5%", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)",backgroundColor:'#05386B'}}><h4>Go to buy now</h4></Button><strong>(in stock)</strong>
         </Col>
     </Row>
     <br/>
