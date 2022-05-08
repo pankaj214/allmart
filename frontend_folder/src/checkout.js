@@ -58,7 +58,7 @@ useEffect(()=>{
        form.setAttribute('method','post')
        const script = document.createElement('script')
        script.src="https://checkout.razorpay.com/v1/checkout.js"
-       script.setAttribute('data-key','rzp_test_dyDeRIriUuDmPY')
+       script.setAttribute('data-key','')
        script.setAttribute('data-amount',amount)
        script.setAttribute('data-name','ALLMART')
        script.setAttribute('data-description','Thanks for purchasing')
